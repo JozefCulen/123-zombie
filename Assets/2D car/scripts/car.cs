@@ -4,7 +4,7 @@ using System.Collections;
 public class car : MonoBehaviour {
 	WheelJoint2D kolesoZ ;
 	Camera cam;
-	 int maxMotorSpeed = 2000;
+	 int maxMotorSpeed = 5000;
 	int acceleration = 500;
 
 	// Use this for initialization
