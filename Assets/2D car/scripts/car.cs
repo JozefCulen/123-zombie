@@ -48,5 +48,9 @@ public class car : MonoBehaviour {
 			//Debug.Log ("motor disabled");
 			}
 		}
+
+		if (Input.GetKey (KeyCode.R)) {
+			this.transform.position = new Vector3(this.transform.position.x-0.1f , this.transform.position.y + 0.5f, this.transform.position.z);
+		}
 	}
 }
