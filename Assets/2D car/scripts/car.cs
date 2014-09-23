@@ -4,8 +4,8 @@ using System.Collections;
 public class car : MonoBehaviour {
 	WheelJoint2D kolesoZ ;
 	Camera cam;
-	 int maxMotorSpeed = 5000;
-	int acceleration = 500;
+	 int maxMotorSpeed = 4000;
+	int acceleration = 10;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +25,8 @@ public class car : MonoBehaviour {
 		if (Input.GetKey(KeyCode.LeftArrow)) {
 			if (mot.motorSpeed <= maxMotorSpeed){
 				kolesoZ.useMotor = true;
+				if(mot.motorSpeed < 0)
+					mot.motorSpeed = 0;
 				if(mot.motorSpeed >= maxMotorSpeed )
 					mot.motorSpeed = maxMotorSpeed;
 				else
@@ -35,6 +37,8 @@ public class car : MonoBehaviour {
 		else if (Input.GetKey(KeyCode.RightArrow)) {
 			if (mot.motorSpeed >= -maxMotorSpeed){
 				kolesoZ.useMotor = true;
+				if(mot.motorSpeed > 0)
+					mot.motorSpeed = 0;
 				if(mot.motorSpeed <= -maxMotorSpeed )
 					mot.motorSpeed = -maxMotorSpeed;
 				else
