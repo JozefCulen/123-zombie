@@ -4,7 +4,10 @@ using System.Collections;
 public class car : MonoBehaviour {
 	WheelJoint2D kolesoZ ;
 	Camera cam;
+
+	//maximalna rychlost
 	int maxMotorSpeed = 2000;
+	//Uroven akceleracie
 	int acceleration = 100;
 
 	float OLDX = 0;
@@ -13,17 +16,25 @@ public class car : MonoBehaviour {
 	float sucetDelta= 0;
 	float sucetRozdil = 0;
 
-	// Use this for initialization
+
+	//bahno z kolesa
+	ParticleSystem bahno;
+	//ground contact
+	public static bool groundContact = false;
+
 	void Start () {
 		kolesoZ = GetComponent<WheelJoint2D>();
+		bahno =(ParticleSystem) GameObject.Find("bahno").particleSystem;
+
+		bahno.enableEmission = false;
 
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
 		JointMotor2D mot = kolesoZ.motor;
-		float priemer = 0.95f;
+		/*float priemer = 0.95f;
 		float uhlova_rychlost = kolesoZ.jointSpeed;
 		float rozdilX = this.transform.position.x - OLDX;
 		float rozdilY = this.transform.position.y - OLDY;
@@ -46,26 +57,35 @@ public class car : MonoBehaviour {
 
 			}
 			else
-				dym.enableEmission=false;*/
+				dym.enableEmission=false;
 			//gui.setValue(kolesoZ.jointSpeed.ToString() +"\n"+ bodkovica +"\n  "+ vysledek +" rozdil:"+rozdil.ToString()+" rozdilX:"+rozdilX.ToString()+"rozdilY:"+rozdilY.ToString()+"\n delta :"+Time.deltaTime.ToString());
 
 		}
 		
 		OLDX = this.transform.position.x;
 		OLDY = this.transform.position.y;
-
+		*/
 		//float vysledek = 
-
+		gui.setValue (groundContact.ToString()+"\n"+mot.motorSpeed.ToString());
 		if (Input.GetKey(KeyCode.LeftArrow)) {
+
 			if (mot.motorSpeed <= maxMotorSpeed){
 				kolesoZ.useMotor = true;
 				if(mot.motorSpeed < 0)
 					mot.motorSpeed = 0;
 				if(mot.motorSpeed >= maxMotorSpeed )
 					mot.motorSpeed = maxMotorSpeed;
-				else
+				else{
 					mot.motorSpeed += acceleration;
+				}
 				kolesoZ.motor = mot;
+				if(/*kolesoZ.jointSpeed < maxMotorSpeed &&*/ groundContact){
+					bahno.transform.rotation = Quaternion.Euler(200,0,0);
+					bahno.enableEmission = true;
+				}
+				else
+					bahno.enableEmission = false;
+
 			}
 		}
 		else if (Input.GetKey(KeyCode.RightArrow)) {
@@ -75,12 +95,21 @@ public class car : MonoBehaviour {
 					mot.motorSpeed = 0;
 				if(mot.motorSpeed <= -maxMotorSpeed )
 					mot.motorSpeed = -maxMotorSpeed;
-				else
+				else{
 					mot.motorSpeed -= acceleration;
+				}
 				kolesoZ.motor = mot;
+				if(/*kolesoZ.jointSpeed > -maxMotorSpeed &&*/ groundContact){
+					bahno.enableEmission = true;
+				}
+				else
+					bahno.enableEmission = false;
 			}
 		}
 		else{
+			bahno.transform.rotation = Quaternion.Euler(330,0,0);
+			bahno.enableEmission = false;
+
 			if(kolesoZ.useMotor == true){
 				kolesoZ.useMotor = false;
 			}
