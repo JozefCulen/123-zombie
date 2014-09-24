@@ -4,24 +4,58 @@ using System.Collections;
 public class car : MonoBehaviour {
 	WheelJoint2D kolesoZ ;
 	Camera cam;
-	 int maxMotorSpeed = 4000;
-	int acceleration = 10;
+	int maxMotorSpeed = 2000;
+	int acceleration = 100;
+
+	float OLDX = 0;
+	float OLDY = 0;
+	float rozdil =0;
+	float sucetDelta= 0;
+	float sucetRozdil = 0;
 
 	// Use this for initialization
 	void Start () {
 		kolesoZ = GetComponent<WheelJoint2D>();
 
-		Camera.main.guiText.text = "hovado";
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 		JointMotor2D mot = kolesoZ.motor;
-		if (Input.anyKeyDown) {
-			//Debug.Log("stalcam");
-			Debug.Log(mot.motorSpeed);
+		float priemer = 0.95f;
+		float uhlova_rychlost = kolesoZ.jointSpeed;
+		float rozdilX = this.transform.position.x - OLDX;
+		float rozdilY = this.transform.position.y - OLDY;
+		
+		rozdil = Mathf.Sqrt (rozdilX * rozdilX + rozdilY * rozdilY);
+		sucetDelta += Time.deltaTime;
+		sucetRozdil += rozdil;
+		if (Time.deltaTime > 0.005f) {
+			rozdil = sucetRozdil/sucetDelta;
+						float vysledek = kolesoZ.jointSpeed / rozdil;
+						sucetDelta = 0;
+						sucetRozdil=0;
+			int bodky = (int) Mathf.Abs(vysledek)/20;
+			string bodkovica ="";
+			//for (int i = 0; i < bodky; i++)
+			//	bodkovica += "+";
+
+			/*GameObject dym = gameObject.GetComponent("Cube");
+			if(Mathf.Abs(vysledek) > 250){
+
+			}
+			else
+				dym.enableEmission=false;*/
+			//gui.setValue(kolesoZ.jointSpeed.ToString() +"\n"+ bodkovica +"\n  "+ vysledek +" rozdil:"+rozdil.ToString()+" rozdilX:"+rozdilX.ToString()+"rozdilY:"+rozdilY.ToString()+"\n delta :"+Time.deltaTime.ToString());
+
 		}
+		
+		OLDX = this.transform.position.x;
+		OLDY = this.transform.position.y;
+
+		//float vysledek = 
+
 		if (Input.GetKey(KeyCode.LeftArrow)) {
 			if (mot.motorSpeed <= maxMotorSpeed){
 				kolesoZ.useMotor = true;
@@ -49,7 +83,6 @@ public class car : MonoBehaviour {
 		else{
 			if(kolesoZ.useMotor == true){
 				kolesoZ.useMotor = false;
-			//Debug.Log ("motor disabled");
 			}
 		}
 
