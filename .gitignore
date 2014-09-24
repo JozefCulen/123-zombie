@@ -216,7 +216,7 @@ pip-log.txt
 .mr.developer.cfg
 
 #unity
-ProjectSettings/
+
 Temp/
 output/
-Library/
+
