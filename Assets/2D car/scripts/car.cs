@@ -6,7 +6,7 @@ public class car : MonoBehaviour {
 	Camera cam;
 
 	//maximalna rychlost
-	int maxMotorSpeed = 2000;
+	int maxMotorSpeed = 4000;
 	//Uroven akceleracie
 	int acceleration = 100;
 
@@ -34,7 +34,7 @@ public class car : MonoBehaviour {
 	void Update () {
 
 		JointMotor2D mot = kolesoZ.motor;
-		/*float priemer = 0.95f;
+		float priemer = 0.95f;
 		float uhlova_rychlost = kolesoZ.jointSpeed;
 		float rozdilX = this.transform.position.x - OLDX;
 		float rozdilY = this.transform.position.y - OLDY;
@@ -42,7 +42,7 @@ public class car : MonoBehaviour {
 		rozdil = Mathf.Sqrt (rozdilX * rozdilX + rozdilY * rozdilY);
 		sucetDelta += Time.deltaTime;
 		sucetRozdil += rozdil;
-		if (Time.deltaTime > 0.005f) {
+		if (Time.deltaTime > 0.001f) {
 			rozdil = sucetRozdil/sucetDelta;
 						float vysledek = kolesoZ.jointSpeed / rozdil;
 						sucetDelta = 0;
@@ -52,19 +52,20 @@ public class car : MonoBehaviour {
 			//for (int i = 0; i < bodky; i++)
 			//	bodkovica += "+";
 
-			/*GameObject dym = gameObject.GetComponent("Cube");
-			if(Mathf.Abs(vysledek) > 250){
 
+			if(Mathf.Abs(vysledek) > 190 && Mathf.Abs(vysledek) < 1000000 && groundContact){
+				bahno.enableEmission=true;
 			}
-			else
-				dym.enableEmission=false;
+			else{
+				bahno.enableEmission=false;
+				}
 			//gui.setValue(kolesoZ.jointSpeed.ToString() +"\n"+ bodkovica +"\n  "+ vysledek +" rozdil:"+rozdil.ToString()+" rozdilX:"+rozdilX.ToString()+"rozdilY:"+rozdilY.ToString()+"\n delta :"+Time.deltaTime.ToString());
 
 		}
 		
 		OLDX = this.transform.position.x;
 		OLDY = this.transform.position.y;
-		*/
+
 		//float vysledek = 
 		gui.setValue (groundContact.ToString()+"\n"+mot.motorSpeed.ToString());
 		if (Input.GetKey(KeyCode.LeftArrow)) {
@@ -79,12 +80,7 @@ public class car : MonoBehaviour {
 					mot.motorSpeed += acceleration;
 				}
 				kolesoZ.motor = mot;
-				if(/*kolesoZ.jointSpeed < maxMotorSpeed &&*/ groundContact){
-					bahno.transform.rotation = Quaternion.Euler(200,0,0);
-					bahno.enableEmission = true;
-				}
-				else
-					bahno.enableEmission = false;
+				bahno.transform.rotation = Quaternion.Euler(200,0,0);
 
 			}
 		}
@@ -99,16 +95,12 @@ public class car : MonoBehaviour {
 					mot.motorSpeed -= acceleration;
 				}
 				kolesoZ.motor = mot;
-				if(/*kolesoZ.jointSpeed > -maxMotorSpeed &&*/ groundContact){
-					bahno.enableEmission = true;
-				}
-				else
-					bahno.enableEmission = false;
+				bahno.transform.rotation = Quaternion.Euler(330,0,0);
 			}
 		}
 		else{
-			bahno.transform.rotation = Quaternion.Euler(330,0,0);
-			bahno.enableEmission = false;
+
+			//bahno.enableEmission = false;
 
 			if(kolesoZ.useMotor == true){
 				kolesoZ.useMotor = false;
@@ -118,5 +110,8 @@ public class car : MonoBehaviour {
 		if (Input.GetKey (KeyCode.R)) {
 			this.transform.position = new Vector3(this.transform.position.x-0.1f , this.transform.position.y + 0.5f, this.transform.position.z);
 		}
+
+		//bahno.enableEmission = true;
+		
 	}
 }
