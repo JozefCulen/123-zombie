@@ -34,7 +34,7 @@ public class car : MonoBehaviour {
 	void Update () {
 
 		JointMotor2D mot = kolesoZ.motor;
-		float priemer = 0.95f;
+		//float priemer = 0.95f;
 		float uhlova_rychlost = kolesoZ.jointSpeed;
 		float rozdilX = this.transform.position.x - OLDX;
 		float rozdilY = this.transform.position.y - OLDY;
@@ -48,7 +48,7 @@ public class car : MonoBehaviour {
 						sucetDelta = 0;
 						sucetRozdil=0;
 			int bodky = (int) Mathf.Abs(vysledek)/20;
-			string bodkovica ="";
+			//string bodkovica ="";
 			//for (int i = 0; i < bodky; i++)
 			//	bodkovica += "+";
 
@@ -66,52 +66,45 @@ public class car : MonoBehaviour {
 		OLDX = this.transform.position.x;
 		OLDY = this.transform.position.y;
 
-		//float vysledek = 
-		gui.setValue (groundContact.ToString()+"\n"+mot.motorSpeed.ToString());
-		if (Input.GetKey(KeyCode.LeftArrow)) {
+		//float vysledek =
 
-			if (mot.motorSpeed <= maxMotorSpeed){
-				kolesoZ.useMotor = true;
-				if(mot.motorSpeed < 0)
-					mot.motorSpeed = 0;
-				if(mot.motorSpeed >= maxMotorSpeed )
-					mot.motorSpeed = maxMotorSpeed;
-				else{
-					mot.motorSpeed += acceleration;
-				}
-				kolesoZ.motor = mot;
-				bahno.transform.rotation = Quaternion.Euler(200,0,0);
+		float direction = Input.GetAxis ("Horizontal") * (-1);   //divne invertovane
 
-			}
+		float newSpeed = mot.motorSpeed;
+		if (newSpeed * direction < 0)	{ //(newSpeed < 0 && direction > 0) || (newSpeed > 0 && direction < 0)) 
+			newSpeed = 0;
 		}
-		else if (Input.GetKey(KeyCode.RightArrow)) {
-			if (mot.motorSpeed >= -maxMotorSpeed){
-				kolesoZ.useMotor = true;
-				if(mot.motorSpeed > 0)
-					mot.motorSpeed = 0;
-				if(mot.motorSpeed <= -maxMotorSpeed )
-					mot.motorSpeed = -maxMotorSpeed;
-				else{
-					mot.motorSpeed -= acceleration;
-				}
-				kolesoZ.motor = mot;
-				bahno.transform.rotation = Quaternion.Euler(330,0,0);
-			}
+		newSpeed = newSpeed + direction * acceleration;
+
+		if (newSpeed > maxMotorSpeed) {
+			newSpeed = maxMotorSpeed;
+		} 
+		else if (newSpeed < -maxMotorSpeed) {
+			newSpeed = -maxMotorSpeed;
 		}
-		else{
+		
+		mot.motorSpeed = newSpeed;
+		kolesoZ.motor = mot;
 
-			//bahno.enableEmission = false;
-
-			if(kolesoZ.useMotor == true){
-				kolesoZ.useMotor = false;
-			}
+		if (direction > 0) {
+			kolesoZ.useMotor = true;
+			//bahno.transform.rotation = Quaternion.Euler(330,0,0);
+		}
+		else if (direction < 0) {
+			kolesoZ.useMotor = true;
+			//bahno.transform.rotation = Quaternion.Euler(200,0,0);
+		}
+		else {
+			kolesoZ.useMotor = false;
 		}
 
+		/*
 		if (Input.GetKey (KeyCode.R)) {
 			this.transform.position = new Vector3(this.transform.position.x-0.1f , this.transform.position.y + 0.5f, this.transform.position.z);
 		}
+		*/
 
-		//bahno.enableEmission = true;
+		gui.setValue (groundContact.ToString()+"\n"+mot.motorSpeed.ToString());
 		
 	}
 }
