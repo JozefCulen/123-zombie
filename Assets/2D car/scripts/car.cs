@@ -4,6 +4,7 @@ using System.Collections;
 public class car : MonoBehaviour {
 	WheelJoint2D kolesoZ ;
 	Camera cam;
+	GasTank tank;
 
 	//maximalna rychlost
 	int maxMotorSpeed = 4000;
@@ -15,6 +16,8 @@ public class car : MonoBehaviour {
 	float rozdil =0;
 	float sucetDelta= 0;
 	float sucetRozdil = 0;
+
+	float neutral = 0.2f;
 
 
 	//bahno z kolesa
@@ -28,6 +31,8 @@ public class car : MonoBehaviour {
 
 		bahno.enableEmission = false;
 
+		this.tank = new GasTank ();
+		this.tank.setMaxFill (1000);
 	}
 
 	// Update is called once per frame
@@ -82,7 +87,11 @@ public class car : MonoBehaviour {
 		else if (newSpeed < -maxMotorSpeed) {
 			newSpeed = -maxMotorSpeed;
 		}
-		
+
+		if (!this.tank.use (Mathf.Abs(direction) + this.neutral)) {
+			newSpeed = 0;
+		}
+
 		mot.motorSpeed = newSpeed;
 		kolesoZ.motor = mot;
 
@@ -104,7 +113,11 @@ public class car : MonoBehaviour {
 		}
 		*/
 
-		gui.setValue (groundContact.ToString()+"\n"+mot.motorSpeed.ToString());
+		gui.setValue (
+			"Contact:" + groundContact.ToString() + "\n"
+			+ "Speed:" + mot.motorSpeed.ToString() + "\n"
+			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill()
+		);
 		
 	}
 }
