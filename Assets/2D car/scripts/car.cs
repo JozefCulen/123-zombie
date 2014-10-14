@@ -24,8 +24,26 @@ public class car : MonoBehaviour {
 	ParticleSystem bahno;
 	//ground contact
 	public static bool groundContact = false;
+	protected float health;
+	
+	void OnCollisionEnter2D(Collision2D col)	{
+		if (col.gameObject.name == "GrassThinSprite") {
+			this.makeDamage(col.relativeVelocity.magnitude);
+		}
+	}
+
+	void makeDamage(float v)	{
+		this.health -= v;
+	}
+	
+	float getHealth()	{
+		return this.health;
+	}
+
 
 	void Start () {
+		this.health = 1000;
+
 		kolesoZ = GetComponent<WheelJoint2D>();
 		bahno =(ParticleSystem) GameObject.Find("bahno").particleSystem;
 
@@ -73,7 +91,7 @@ public class car : MonoBehaviour {
 
 		//float vysledek =
 
-		float direction = Input.GetAxis ("Horizontal") * (-1);   //divne invertovane
+		float direction = Input.GetAxis ("Vertical") * (-1);   //divne invertovane
 
 		float newSpeed = mot.motorSpeed;
 		if (newSpeed * direction < 0)	{ //(newSpeed < 0 && direction > 0) || (newSpeed > 0 && direction < 0)) 
@@ -90,21 +108,14 @@ public class car : MonoBehaviour {
 
 		if (!this.tank.use (Mathf.Abs(direction) + this.neutral)) {
 			newSpeed = 0;
-		}
 
-		mot.motorSpeed = newSpeed;
-		kolesoZ.motor = mot;
-
-		if (direction > 0) {
-			kolesoZ.useMotor = true;
-			//bahno.transform.rotation = Quaternion.Euler(330,0,0);
-		}
-		else if (direction < 0) {
-			kolesoZ.useMotor = true;
-			//bahno.transform.rotation = Quaternion.Euler(200,0,0);
+			kolesoZ.useMotor = false;
 		}
 		else {
-			kolesoZ.useMotor = false;
+			mot.motorSpeed = newSpeed;
+			kolesoZ.motor = mot;
+
+			kolesoZ.useMotor = true;
 		}
 
 		/*
@@ -116,7 +127,8 @@ public class car : MonoBehaviour {
 		gui.setValue (
 			"Contact:" + groundContact.ToString() + "\n"
 			+ "Speed:" + mot.motorSpeed.ToString() + "\n"
-			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill()
+			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill() + "\n"
+			+ "Health:" + this.getHealth()
 		);
 		
 	}
