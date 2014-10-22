@@ -13,5 +13,9 @@ public class motor_wheel : MonoBehaviour {
 		if (col.gameObject.name == "GrassThinSprite")
 			car.groundContact = false;
 	}
-
+	
+	void OnCollisionStay2D(Collision2D col)	{
+		if (col.gameObject.name == "GrassThinSprite")
+			car.groundContact = true;
+	}
 }

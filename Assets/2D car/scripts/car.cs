@@ -3,20 +3,21 @@ using System.Collections;
 
 public class car : MonoBehaviour {
 	WheelJoint2D kolesoZ ;
+	WheelJoint2D[] kolesa;
+	WheelJoint2D kolesoP ;
 	Camera cam;
 	GasTank tank;
 
 	//maximalna rychlost
 	int maxMotorSpeed = 4000;
 	//Uroven akceleracie
-	int acceleration = 100;
+	int acceleration = 1;
 
 	float OLDX = 0;
 	float OLDY = 0;
 	float rozdil =0;
 	float sucetDelta= 0;
 	float sucetRozdil = 0;
-
 	float neutral = 0.2f;
 
 
@@ -44,13 +45,15 @@ public class car : MonoBehaviour {
 	void Start () {
 		this.health = 1000;
 
-		kolesoZ = GetComponent<WheelJoint2D>();
+		kolesa = GetComponents<WheelJoint2D>();
+		kolesoZ =kolesa[0];
+		kolesoP = kolesa[1];
 		bahno =(ParticleSystem) GameObject.Find("bahno").particleSystem;
 
 		bahno.enableEmission = false;
 
 		this.tank = new GasTank ();
-		this.tank.setMaxFill (1000);
+		this.tank.setMaxFill (10000);
 	}
 
 	// Update is called once per frame
@@ -62,74 +65,98 @@ public class car : MonoBehaviour {
 		float rozdilX = this.transform.position.x - OLDX;
 		float rozdilY = this.transform.position.y - OLDY;
 		
-		rozdil = Mathf.Sqrt (rozdilX * rozdilX + rozdilY * rozdilY);
+		rozdil = Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x  * kolesoZ.rigidbody2D.velocity.x  + kolesoZ.rigidbody2D.velocity.y  * kolesoZ.rigidbody2D.velocity.y );
 		sucetDelta += Time.deltaTime;
 		sucetRozdil += rozdil;
-		if (Time.deltaTime > 0.001f) {
+		if (Time.deltaTime > 0.0001f) {
 			rozdil = sucetRozdil/sucetDelta;
 						float vysledek = kolesoZ.jointSpeed / rozdil;
 						sucetDelta = 0;
 						sucetRozdil=0;
-			int bodky = (int) Mathf.Abs(vysledek)/20;
-			//string bodkovica ="";
-			//for (int i = 0; i < bodky; i++)
-			//	bodkovica += "+";
 
 
-			if(Mathf.Abs(vysledek) > 190 && Mathf.Abs(vysledek) < 1000000 && groundContact){
+			//if(  Mathf.Abs(vysledek) > 180 && Mathf.Abs(vysledek) < 1000000 && groundContact){
+			float smyk = Mathf.Abs(kolesoZ.jointSpeed / Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x * kolesoZ.rigidbody2D.velocity.x + kolesoZ.rigidbody2D.velocity.y * kolesoZ.rigidbody2D.velocity.y));
+			if ( ( smyk > 194 || smyk < 154) && groundContact && Mathf.Abs(kolesoZ.rigidbody2D.velocity.x) > 0.1f) {
 				bahno.enableEmission=true;
 			}
 			else{
 				bahno.enableEmission=false;
-				}
-			//gui.setValue(kolesoZ.jointSpeed.ToString() +"\n"+ bodkovica +"\n  "+ vysledek +" rozdil:"+rozdil.ToString()+" rozdilX:"+rozdilX.ToString()+"rozdilY:"+rozdilY.ToString()+"\n delta :"+Time.deltaTime.ToString());
+			}
 
+			//gui.setValue(kolesoZ.jointSpeed.ToString() +"\n"+ bodkovica +"\n  "+ vysledek +" rozdil:"+rozdil.ToString()+" rozdilX:"+rozdilX.ToString()+"rozdilY:"+rozdilY.ToString()+"\n delta :"+Time.deltaTime.ToString());
 		}
 		
 		OLDX = this.transform.position.x;
 		OLDY = this.transform.position.y;
 
-		//float vysledek =
 
-		float direction = Input.GetAxis ("Vertical") * (-1);   //divne invertovane
+		float newSpeed; // nastaveni rychlosti motora
+		float newTorque; // nastaveni zaberu motora
 
-		float newSpeed = mot.motorSpeed;
-		if (newSpeed * direction < 0)	{ //(newSpeed < 0 && direction > 0) || (newSpeed > 0 && direction < 0)) 
+		float direction = Input.GetAxis ("Vertical");   //zistenie smeru chodu
+
+		// nie je stlacene ziadne tlacitko
+		if (direction == 0) {
 			newSpeed = 0;
-		}
-		newSpeed = newSpeed + direction * acceleration;
+			newTorque = 0;
 
+		}
+		// uzivatel stlaca plyn a auto nestoji
+		else {
+			newSpeed = direction * maxMotorSpeed;
+			newTorque = 50;
+			if(direction * kolesoZ.rigidbody2D.velocity.x > 0 )
+			{
+				JointMotor2D predne = kolesoP.motor;
+				predne.motorSpeed = 0;
+				kolesoP.useMotor = true;
+				kolesoP.motor = predne;
+				newSpeed = 0;
+				newTorque =50;
+				mot.motorSpeed = 0;
+			}
+			else{
+				kolesoP.useMotor = false;	
+
+			}
+
+		}
+		
+		// osetrenie rozsahu rychlosti motora
 		if (newSpeed > maxMotorSpeed) {
-			newSpeed = maxMotorSpeed;
+			newSpeed = 0;
 		} 
 		else if (newSpeed < -maxMotorSpeed) {
-			newSpeed = -maxMotorSpeed;
+			newSpeed = -0;
 		}
 
+		// spotreba beniznu + kontrola prazdnosti nadrze
 		if (!this.tank.use (Mathf.Abs(direction) + this.neutral)) {
 			newSpeed = 0;
-
-			kolesoZ.useMotor = false;
+			newTorque = 0;
 		}
+		// nadrz nie je prazdna
 		else {
 			mot.motorSpeed = newSpeed;
+			mot.maxMotorTorque = newTorque;
 			kolesoZ.motor = mot;
-
-			kolesoZ.useMotor = true;
 		}
 
-		/*
-		if (Input.GetKey (KeyCode.R)) {
-			this.transform.position = new Vector3(this.transform.position.x-0.1f , this.transform.position.y + 0.5f, this.transform.position.z);
-		}
-		*/
+		float test1 = Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x * kolesoZ.rigidbody2D.velocity.x + kolesoZ.rigidbody2D.velocity.y * kolesoZ.rigidbody2D.velocity.y) / kolesoZ.jointSpeed;
+		float test2 = kolesoZ.jointSpeed / Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x * kolesoZ.rigidbody2D.velocity.x + kolesoZ.rigidbody2D.velocity.y * kolesoZ.rigidbody2D.velocity.y);
 
 		gui.setValue (
 			"Contact:" + groundContact.ToString() + "\n"
+			+ "Pytagor:" + Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x * kolesoZ.rigidbody2D.velocity.x + kolesoZ.rigidbody2D.velocity.y * kolesoZ.rigidbody2D.velocity.y).ToString() + "\n"
+			+ "hajzel 1:" + direction.ToString() + "\n"
+			+ "hajzel 2:" + kolesoZ.rigidbody2D.velocity.x.ToString() + "\n"
+			+ "kolesoZ.jointSpeed:" + kolesoZ.jointSpeed.ToString() + "\n"
+			+ "rychlost kolesa:" + kolesoZ.rigidbody2D.velocity.ToString() + "\n"
 			+ "Speed:" + mot.motorSpeed.ToString() + "\n"
 			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill() + "\n"
 			+ "Health:" + this.getHealth()
 		);
-		
+	
 	}
 }
