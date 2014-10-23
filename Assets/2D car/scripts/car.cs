@@ -98,41 +98,46 @@ public class car : MonoBehaviour {
 
 		// nie je stlacene ziadne tlacitko
 		if (direction == 0) {
+			// vypnem tah motora (ala neutral)
 			newSpeed = 0;
 			newTorque = 0;
 
+			// vypnutie brzdy na prednom kolese
+			kolesoP.useMotor = false;
 		}
-		// uzivatel stlaca plyn a auto nestoji
+		// uzivatel stlaca plyn a auto ide do opacneho smeru
+		else if(direction * kolesoZ.rigidbody2D.velocity.x > 0 ) {
+			newSpeed = direction * maxMotorSpeed;
+
+			// zapnem tah motora
+			newTorque = 50;
+
+			// nulova rychlost motora = brzda
+			newSpeed = 0;
+
+			JointMotor2D predne = kolesoP.motor;
+			predne.motorSpeed = 0;
+			kolesoP.useMotor = true;
+			kolesoP.motor = predne;
+		}
+		// uzivatel stlaca plyn a auto ide do rovnakeho smeru
 		else {
 			newSpeed = direction * maxMotorSpeed;
+
+			if( Mathf.Abs(newSpeed) < Mathf.Abs(mot.motorSpeed) ) {
+				newSpeed = mot.motorSpeed;
+			}
+
+			// zapnem tah motora
 			newTorque = 50;
-			if(direction * kolesoZ.rigidbody2D.velocity.x > 0 )
-			{
-				JointMotor2D predne = kolesoP.motor;
-				predne.motorSpeed = 0;
-				kolesoP.useMotor = true;
-				kolesoP.motor = predne;
-				newSpeed = 0;
-				newTorque =50;
-				mot.motorSpeed = 0;
-			}
-			else{
-				kolesoP.useMotor = false;	
 
-			}
-
-		}
-		
-		// osetrenie rozsahu rychlosti motora
-		if (newSpeed > maxMotorSpeed) {
-			newSpeed = 0;
-		} 
-		else if (newSpeed < -maxMotorSpeed) {
-			newSpeed = -0;
+			// vypnutie brzdy na prednom kolese
+			kolesoP.useMotor = false;	
 		}
 
 		// spotreba beniznu + kontrola prazdnosti nadrze
 		if (!this.tank.use (Mathf.Abs(direction) + this.neutral)) {
+			// vypnem tah motora (ala neutral)
 			newSpeed = 0;
 			newTorque = 0;
 		}
@@ -148,10 +153,10 @@ public class car : MonoBehaviour {
 
 		gui.setValue (
 			"Contact:" + groundContact.ToString() + "\n"
-			+ "Pytagor:" + Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x * kolesoZ.rigidbody2D.velocity.x + kolesoZ.rigidbody2D.velocity.y * kolesoZ.rigidbody2D.velocity.y).ToString() + "\n"
-			+ "hajzel 1:" + direction.ToString() + "\n"
-			+ "hajzel 2:" + kolesoZ.rigidbody2D.velocity.x.ToString() + "\n"
-			+ "kolesoZ.jointSpeed:" + kolesoZ.jointSpeed.ToString() + "\n"
+			+ "direction:" + direction.ToString() + "\n"
+			+ "newSpeed:" + newSpeed.ToString() + "\n"
+			+ "newTorque:" + newTorque.ToString() + "\n"
+			+ "kolesoZ.rigidbody2D.velocity.x:" + kolesoZ.rigidbody2D.velocity.x.ToString() + "\n"
 			+ "rychlost kolesa:" + kolesoZ.rigidbody2D.velocity.ToString() + "\n"
 			+ "Speed:" + mot.motorSpeed.ToString() + "\n"
 			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill() + "\n"
