@@ -150,8 +150,9 @@ public class car : MonoBehaviour {
 			kolesoZ.motor = mot;
 		}
 
-		float test1 = Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x * kolesoZ.rigidbody2D.velocity.x + kolesoZ.rigidbody2D.velocity.y * kolesoZ.rigidbody2D.velocity.y) / kolesoZ.jointSpeed;
-		float test2 = kolesoZ.jointSpeed / Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x * kolesoZ.rigidbody2D.velocity.x + kolesoZ.rigidbody2D.velocity.y * kolesoZ.rigidbody2D.velocity.y);
+		float backwheelpositionY = kolesoZ.transform.position.y;
+		bahno.transform.position = new Vector3(bahno.transform.position.x, backwheelpositionY, bahno.transform.position.z);
+		//bahno.transform.position.y = backwheelpositionY;
 
 		gui.setValue (
 			"Contact:" + groundContact.ToString() + "\n"
