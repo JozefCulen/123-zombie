@@ -23,6 +23,8 @@ public class car : MonoBehaviour {
 
 	//bahno z kolesa
 	ParticleSystem bahno;
+	ParticleSystem bahno_dym_zadne;
+	ParticleSystem bahno_dym_predne;
 	//ground contact
 	public static bool groundContact = false;
 	public static bool wheel_smoke = false;
@@ -51,8 +53,12 @@ public class car : MonoBehaviour {
 		kolesoZ =kolesa[0];
 		kolesoP = kolesa[1];
 		bahno =(ParticleSystem) GameObject.Find("bahno").particleSystem;
+		bahno_dym_zadne =(ParticleSystem) GameObject.Find("bahno_dym").particleSystem;
 
+		bahno_dym_predne =(ParticleSystem) Instantiate(bahno_dym_zadne);
 		bahno.enableEmission = false;
+		bahno_dym_zadne.enableEmission = false;
+		bahno_dym_predne.enableEmission = false;
 
 		this.tank = new GasTank ();
 		this.tank.setMaxFill (10000);
@@ -66,7 +72,16 @@ public class car : MonoBehaviour {
 		float uhlova_rychlost = kolesoZ.jointSpeed;
 		float rozdilX = this.transform.position.x - OLDX;
 		float rozdilY = this.transform.position.y - OLDY;
+
+		Rigidbody2D koleso_zadne = GameObject.Find("koleso_zadne").rigidbody2D;
+		Rigidbody2D koleso_predne = GameObject.Find("koleso_predne").rigidbody2D;
 		
+		bahno.transform.position = new Vector3(koleso_zadne.transform.position.x, koleso_zadne.transform.position.y - 0.2f,koleso_zadne.transform.position.z);
+		bahno_dym_predne.transform.position = new Vector3(koleso_predne.transform.position.x, koleso_predne.transform.position.y - 0.2f,koleso_predne.transform.position.z);
+
+
+
+
 		rozdil = Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x  * kolesoZ.rigidbody2D.velocity.x  + kolesoZ.rigidbody2D.velocity.y  * kolesoZ.rigidbody2D.velocity.y );
 		sucetDelta += Time.deltaTime;
 		sucetRozdil += rozdil;
@@ -82,9 +97,13 @@ public class car : MonoBehaviour {
 			smyk = Mathf.Abs(kolesoZ.jointSpeed / Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x * kolesoZ.rigidbody2D.velocity.x + kolesoZ.rigidbody2D.velocity.y * kolesoZ.rigidbody2D.velocity.y));
 			if ( ( smyk > 234 || smyk < 114 || wheel_smoke) && groundContact && Mathf.Abs(kolesoZ.rigidbody2D.velocity.x) > 0.1f ) {
 				bahno.enableEmission=true;
+				bahno_dym_zadne.enableEmission=true;
+				bahno_dym_predne.enableEmission=true;
 			}
 			else{
 				bahno.enableEmission=false;
+				bahno_dym_zadne.enableEmission=false;
+				bahno_dym_predne.enableEmission=false;
 			}
 
 			//gui.setValue(kolesoZ.jointSpeed.ToString() +"\n"+ bodkovica +"\n  "+ vysledek +" rozdil:"+rozdil.ToString()+" rozdilX:"+rozdilX.ToString()+"rozdilY:"+rozdilY.ToString()+"\n delta :"+Time.deltaTime.ToString());
@@ -152,9 +171,6 @@ public class car : MonoBehaviour {
 			kolesoZ.motor = mot;
 		}
 
-		Rigidbody2D koleso_zadne = GameObject.Find("koleso_zadne").rigidbody2D;
-	
-		bahno.transform.position = new Vector3(koleso_zadne.transform.position.x, koleso_zadne.transform.position.y - 0.2f,koleso_zadne.transform.position.z);
 
 
 		gui.setValue (
@@ -169,6 +185,15 @@ public class car : MonoBehaviour {
 			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill() + "\n"
 			+ "Health:" + this.getHealth()
 		);
-	
+
+
+		if (Mathf.Abs(kolesoZ.rigidbody2D.velocity.x) > 5 && groundContact) {
+			bahno_dym_zadne.enableEmission=true;
+			bahno_dym_predne.enableEmission=true;
+		}
+		else{
+			bahno_dym_zadne.enableEmission=false;
+			bahno_dym_predne.enableEmission=false;
+		}
 	}
 }
