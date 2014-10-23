@@ -7,7 +7,7 @@ public class gui : MonoBehaviour {
 	void OnGUI () {
 		// Make a background box
 		//GUI.Box(new Rect(10,10,100,90), "Loader Menu");
-		GUI.Label(new Rect(10,10,1000,90), value);
+		GUI.Label(new Rect(10,10,1000,200), value);
 
 	}
 

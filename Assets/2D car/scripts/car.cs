@@ -68,6 +68,7 @@ public class car : MonoBehaviour {
 		rozdil = Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x  * kolesoZ.rigidbody2D.velocity.x  + kolesoZ.rigidbody2D.velocity.y  * kolesoZ.rigidbody2D.velocity.y );
 		sucetDelta += Time.deltaTime;
 		sucetRozdil += rozdil;
+		float smyk = 0;
 		if (Time.deltaTime > 0.0001f) {
 			rozdil = sucetRozdil/sucetDelta;
 						float vysledek = kolesoZ.jointSpeed / rozdil;
@@ -76,8 +77,8 @@ public class car : MonoBehaviour {
 
 
 			//if(  Mathf.Abs(vysledek) > 180 && Mathf.Abs(vysledek) < 1000000 && groundContact){
-			float smyk = Mathf.Abs(kolesoZ.jointSpeed / Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x * kolesoZ.rigidbody2D.velocity.x + kolesoZ.rigidbody2D.velocity.y * kolesoZ.rigidbody2D.velocity.y));
-			if ( ( smyk > 194 || smyk < 154) && groundContact && Mathf.Abs(kolesoZ.rigidbody2D.velocity.x) > 0.1f) {
+			smyk = Mathf.Abs(kolesoZ.jointSpeed / Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x * kolesoZ.rigidbody2D.velocity.x + kolesoZ.rigidbody2D.velocity.y * kolesoZ.rigidbody2D.velocity.y));
+			if ( ( smyk > 234 || smyk < 114) && groundContact && Mathf.Abs(kolesoZ.rigidbody2D.velocity.x) > 0.1f) {
 				bahno.enableEmission=true;
 			}
 			else{
@@ -90,7 +91,7 @@ public class car : MonoBehaviour {
 		OLDX = this.transform.position.x;
 		OLDY = this.transform.position.y;
 
-
+		float oldSpeed = mot.motorSpeed;
 		float newSpeed; // nastaveni rychlosti motora
 		float newTorque; // nastaveni zaberu motora
 
@@ -99,7 +100,7 @@ public class car : MonoBehaviour {
 		// nie je stlacene ziadne tlacitko
 		if (direction == 0) {
 			// vypnem tah motora (ala neutral)
-			newSpeed = 0;
+			newSpeed = oldSpeed;
 			newTorque = 0;
 
 			// vypnutie brzdy na prednom kolese
@@ -138,7 +139,8 @@ public class car : MonoBehaviour {
 		// spotreba beniznu + kontrola prazdnosti nadrze
 		if (!this.tank.use (Mathf.Abs(direction) + this.neutral)) {
 			// vypnem tah motora (ala neutral)
-			newSpeed = 0;
+			newSpeed = oldSpeed;
+
 			newTorque = 0;
 		}
 		// nadrz nie je prazdna
@@ -157,7 +159,8 @@ public class car : MonoBehaviour {
 			+ "newSpeed:" + newSpeed.ToString() + "\n"
 			+ "newTorque:" + newTorque.ToString() + "\n"
 			+ "kolesoZ.rigidbody2D.velocity.x:" + kolesoZ.rigidbody2D.velocity.x.ToString() + "\n"
-			+ "rychlost kolesa:" + kolesoZ.rigidbody2D.velocity.ToString() + "\n"
+			+ "oldSpeed:" + oldSpeed.ToString() + "\n"
+			+ "smyk:" + smyk.ToString() + "\n"
 			+ "Speed:" + mot.motorSpeed.ToString() + "\n"
 			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill() + "\n"
 			+ "Health:" + this.getHealth()
