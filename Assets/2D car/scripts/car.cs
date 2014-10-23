@@ -25,6 +25,8 @@ public class car : MonoBehaviour {
 	ParticleSystem bahno;
 	//ground contact
 	public static bool groundContact = false;
+	public static bool wheel_smoke = false;
+
 	protected float health;
 	
 	void OnCollisionEnter2D(Collision2D col)	{
@@ -78,7 +80,7 @@ public class car : MonoBehaviour {
 
 			//if(  Mathf.Abs(vysledek) > 180 && Mathf.Abs(vysledek) < 1000000 && groundContact){
 			smyk = Mathf.Abs(kolesoZ.jointSpeed / Mathf.Sqrt (kolesoZ.rigidbody2D.velocity.x * kolesoZ.rigidbody2D.velocity.x + kolesoZ.rigidbody2D.velocity.y * kolesoZ.rigidbody2D.velocity.y));
-			if ( ( smyk > 234 || smyk < 114) && groundContact && Mathf.Abs(kolesoZ.rigidbody2D.velocity.x) > 0.1f) {
+			if ( ( smyk > 234 || smyk < 114 || wheel_smoke) && groundContact && Mathf.Abs(kolesoZ.rigidbody2D.velocity.x) > 0.1f ) {
 				bahno.enableEmission=true;
 			}
 			else{
@@ -150,9 +152,10 @@ public class car : MonoBehaviour {
 			kolesoZ.motor = mot;
 		}
 
-		float backwheelpositionY = kolesoZ.transform.position.y;
-		bahno.transform.position = new Vector3(bahno.transform.position.x, backwheelpositionY, bahno.transform.position.z);
-		//bahno.transform.position.y = backwheelpositionY;
+		Rigidbody2D koleso_zadne = GameObject.Find("koleso_zadne").rigidbody2D;
+	
+		bahno.transform.position = new Vector3(koleso_zadne.transform.position.x, koleso_zadne.transform.position.y - 0.2f,koleso_zadne.transform.position.z);
+
 
 		gui.setValue (
 			"Contact:" + groundContact.ToString() + "\n"
