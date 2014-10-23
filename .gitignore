@@ -220,5 +220,6 @@ pip-log.txt
 Temp/
 output/
 Library/
-
+*.sln   
+*.csproj 
 
