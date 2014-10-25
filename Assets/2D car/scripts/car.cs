@@ -1,234 +1,105 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Wheel 
-{
-	public WheelJoint2D joint;
-	public bool powered;
-	public ParticleSystem dirt;
-	public ParticleSystem smoke;
-
-	private bool sliding;
-	private bool groundContact;
-	private bool smoking;
-
-	public Wheel(WheelJoint2D jointObject)
-	{
-		this.joint = jointObject;
-		this.powered = false;
-		this.dirt = null;
-		this.sliding = false;
-		this.groundContact = false;
-		this.smoking = false;
-	}
-
-	public void updateParticlesPositions() {
-		if (dirt != null) {
-			dirt.transform.position = new Vector3 (joint.connectedBody.transform.position.x, joint.connectedBody.transform.position.y - 0.2f, joint.connectedBody.transform.position.z - 5);
-		}
-		smoke.transform.position = new Vector3(joint.connectedBody.transform.position.x, joint.connectedBody.transform.position.y - 0.2f,joint.connectedBody.transform.position.z - 5);
-	}
-
-	public bool isSliding() {
-
-		return sliding;
-	}
-
-	public bool slidingDetection() {
-		float skidConstant = 174;
-		float skidValue; // absolutna hodnota smyku
-		float traveledDistance; // ujeta vzdialenost auta
-
-		// ujeta vzdialenost auta sa pocita na zaklade rychlosti po suranici X a Y
-		traveledDistance = Mathf.Sqrt (joint.rigidbody2D.velocity.x * joint.rigidbody2D.velocity.x + joint.rigidbody2D.velocity.y * joint.rigidbody2D.velocity.y);
-
-		// vypocet urovne smyku
-		skidValue = Mathf.Abs(joint.jointSpeed / traveledDistance );
-		if ( ( skidValue > skidConstant + 60 || skidValue < skidConstant - 60 ) && this.groundContact && Mathf.Abs(joint.rigidbody2D.velocity.x) > 0.1f && traveledDistance > 0.1f) {
-			this.sliding = true;
-		}
-		else{
-			this.sliding = false;
-		}
-
-		this.smoke.enableEmission = this.sliding;
-
-		if (this.dirt != null) {
-			this.dirt.enableEmission = this.sliding;
-		}
-		return this.sliding;
-	}
-
-	public void updateSpeed() {
-		if( this.powered == false) {
-			if( car.breaking == true ) {
-				JointMotor2D newMotor = this.joint.motor;
-				newMotor.motorSpeed = 0;
-
-				this.joint.useMotor = true;
-				this.joint.motor = newMotor;
-			}
-			else {
-				this.joint.useMotor = false;
-			}
-		}
-		else {
-			int maxMotorSpeed = 4000;
-			float oldSpeed; // aktualna rychlost motora = rychlost motora v predchodzom frame
-			float newSpeed; // nastaveni rychlosti motora
-			float newTorque; // nastaveni zaberu motora
-
-			oldSpeed = this.joint.motor.motorSpeed;
-
-			//zistenie smeru stlacania sipky
-			float direction = Input.GetAxis ("Vertical");
-			
-			// nie je stlacene ziadne tlacitko
-			if (direction == 0) {
-				// vypnem tah motora (ala neutral)
-				newSpeed = oldSpeed;
-				newTorque = 0;
-				
-				// vypnutie brzdy na prednom kolese
-				this.joint.useMotor = false;
-			}
-			// uzivatel stlaca plyn a auto ide do opacneho smeru
-			else if(direction * this.joint.rigidbody2D.velocity.x > 0 ) {
-				newSpeed = direction * maxMotorSpeed;
-				
-				// zapnem tah motora
-				newTorque = 50;
-				
-				// nulova rychlost motora = brzda
-				newSpeed = 0;
-			}
-			// uzivatel stlaca plyn a auto ide do rovnakeho smeru
-			else {
-				newSpeed = direction * maxMotorSpeed;
-				
-				if( Mathf.Abs(newSpeed) < Mathf.Abs(this.joint.motor.motorSpeed) ) {
-					newSpeed = this.joint.motor.motorSpeed;
-				}
-				
-				// zapnem tah motora
-				newTorque = 50;
-				
-				// vypnutie brzdy na prednom kolese
-				this.joint.useMotor = false;	
-			}
-
-
-			// spotreba beniznu + kontrola prazdnosti nadrze
-			if (!car.tank.use (Mathf.Abs(direction) + car.neutralGasUsage)) {
-				// vypnem tah motora (ala neutral)
-				newSpeed = oldSpeed;
-				
-				newTorque = 0;
-			}
-			
-			JointMotor2D newMotor = this.joint.motor;
-			newMotor.motorSpeed = newSpeed;
-			newMotor.maxMotorTorque = newTorque;
-
-			this.joint.motor = newMotor;
-		}
-		if (Mathf.Abs(this.joint.rigidbody2D.velocity.x) > 5 && this.groundContact) {
-			this.smoke.enableEmission = true;
-		}
-		else{
-			this.smoke.enableEmission = false;
-		}
-	}
-
-	public void updateGroundContact(bool newValue) {
-		this.groundContact = newValue;
-	}
-	public void updateSmoking(bool newValue) {
-		this.smoking = newValue;
-	}
-
-}
 
 public class car : MonoBehaviour {
-	public static Wheel[] wheels; // obsahuje pole vsetkych kolies auta
-	public static bool breaking;
+	private static Wheel[] wheels; // obsahuje pole vsetkych kolies auta
+	private static bool breaking; // status ci auto brzdi
+	private static float velocity; // aktualna rychlost auta (pocitana na zaklade pytagora)
+	private static int firstPoweredWheel; // prve pohanane kolo (v poradi) na zaklade ktoreho sa budu pocitat niektore globalne hodnoty pre cele auto
+	private static GasTank tank; // palivova nadrz vozidla
+	private static float direction; // smer stlacana sipek
 
-	WheelJoint2D kolesoZ ;
-	WheelJoint2D[] kolesa;
-	WheelJoint2D kolesoP ;
-	Camera cam;
-	public static GasTank tank;
-
-	//maximalna rychlost
-	int maxMotorSpeed = 4000;
-	//Uroven akceleracie
-	//int acceleration = 1;
+	public static int maxMotorSpeed = 4000; // maximalna rychlost vozidla
+	public static float neutralGasUsage = 0.2f; // minimalna spotreba paliva
+	public static float health = 1000; // vydrz vozdila (pro damage) po spusteni
+	public static float defaultGasTankValue = 5000; // objem nadrze pri spusteni hry
+	public static float gasTankCapacity = 10000; // maximalny objem nadrze
 	
-	float rozdil =0;
-	float sucetDelta= 0;
-	float sucetRozdil = 0;
-	public static float neutralGasUsage = 0.2f;
+	void Start () {
+		// inicializacia autovych premenych
+		car.breaking = false;
+		car.velocity = 0.0f;
+		car.firstPoweredWheel = -1;
+		car.tank = new GasTank ( gasTankCapacity, defaultGasTankValue );
+		car.direction = 0f;
 
+		InitializeAllWheels ();
+	}
 
-	//bahno z kolesa
-	ParticleSystem bahno;
-	ParticleSystem bahno_dym_zadne;
-	ParticleSystem bahno_dym_predne;
-	//ground contact
-	public static bool groundContact = false;
-	public static bool wheel_smoke = false;
-
-	protected float health;
 	
-	void OnCollisionEnter2D(Collision2D col)	{
-		if (col.gameObject.name == "GrassThinSprite") {
-			this.makeDamage(col.relativeVelocity.magnitude);
-		}
-	}
+	// Update is called once per frame
+	void Update () {
+		// aktualizovanie ovladania
+		updateCarControl ();
 
-	void makeDamage(float v)	{
-		this.health -= v;
-	}
-	
-	float getHealth()	{
-		return this.health;
-	}
-
-	private void wheelsParticles() {
-		int i; // pomocna iteracna premenna
-
-		for (i = 0; i < wheels.Length; i++) {
-			// posuniem particle systemy spojene s kolesom na zaklade aktualnej pozicie kolesa
-			wheels[i].updateParticlesPositions();
-		}
-	}
-
-
-	private void sliding() {
-		int i; // pomocna iteracna premenna
+		// aktualizovanie rychlosti auta
+		updateCarVelocity();
 		
-		for (i = 0; i < wheels.Length; i++) {
-			// posuniem particle systemy spojene s kolesom na zaklade aktualnej pozicie kolesa
-			wheels[i].slidingDetection();
-		}
-	}
+		// detekcia ci auto brzdi
+		breakingDetection ();
 
+		// aktualizacia stavu nadrze
+		updateGasTank ();
 
-	private void movement () {
-		int i; // pomocna iteracna premenna
+		// aktualizacia kolies
+		updateWheels ();
+
 		
-		for (i = 0; i < wheels.Length; i++) {
-			// posuniem particle systemy spojene s kolesom na zaklade aktualnej pozicie kolesa
-			wheels[i].updateSpeed();
+		gui.setValue (
+			"breaking:" + car.breaking.ToString() + "\n"
+			+ "velocity:" + car.velocity.ToString() + "\n"
+			+ "direction:" + car.direction.ToString() + "\n"
+			+ "w sliding:" + car.getWheel(car.firstPoweredWheel).sliding.ToString() + "\n"
+			+ "w groundContact:" + car.getWheel(car.firstPoweredWheel).groundContact.ToString() + "\n"
+			+ "w smoking:" + car.getWheel(car.firstPoweredWheel).smoking.ToString() + "\n"
+			+ "w temp:" + car.getWheel(car.firstPoweredWheel).temp.ToString() + "\n"
+			+ "Tank:" + car.tank.getCurrentFill() + "/" + car.tank.getMaxFill() + "\n"
+			+ "Health:" + car.getHealth()
+			);
+	}
+
+	public static Wheel getWheel(int input_index) {
+		return car.wheels[input_index];
+	}
+	
+	private void InitializeAllWheels() {
+		int i; // pomocna iteracna premenna
+		ParticleSystem dirt; // obsahuje particle system pre smykovanie
+		ParticleSystem smoke; // obsahuje particle system pre dymenie kolies (napr. velka rychlost)
+		
+		// nacitanie particle systemu
+		dirt = (ParticleSystem) GameObject.Find("bahno").particleSystem;
+		dirt.enableEmission = false;
+		smoke =(ParticleSystem) GameObject.Find("bahno_dym").particleSystem;
+		smoke.enableEmission = false;
+		
+		// nacitam si zoznam vsetkych kolies
+		WheelJoint2D[] wheelsJoint = GetComponents<WheelJoint2D>();
+
+		// inicializujem si pole do ktoreho ulozim vsetky kolesa
+		car.wheels = new Wheel[wheelsJoint.Length];
+		
+		for( i = 0; i < wheelsJoint.Length; i++ ) {
+			// objekt kolesa transofrmujem do rozsireneho objektu kolesa a ulozim do pola
+			car.wheels[i] = new Wheel(wheelsJoint[i], i, (ParticleSystem) Instantiate(smoke), (ParticleSystem) Instantiate(dirt));
+
+			// jedna sa o prve pohanane koleso v ramci auta
+			if( car.firstPoweredWheel == -1 && car.wheels[i].IsPowered() ) {
+				car.firstPoweredWheel = i;
+			}
 		}
 	}
 
-
-	private void gas_usage() {
-
+	private void updateCarControl() {
+		car.direction = Input.GetAxis ("Vertical");
 	}
 
-
+	private void updateCarVelocity() {
+		// vypocitani rychlosti auta na zaklade pytagorovej vety
+		car.velocity = car.wheels[firstPoweredWheel].GetVelocityMagnitude();
+	}
+	
 	private void breakingDetection() {
 		//zistenie smeru stlacania sipky
 		float direction = Input.GetAxis ("Vertical");
@@ -242,112 +113,75 @@ public class car : MonoBehaviour {
 		}
 	}
 
-
-	void Start () {
+	private void updateWheels() {
 		int i; // pomocna iteracna premenna
-		Wheel newWheel;
-		ParticleSystem dirt; // obsahuje particle system pre smykovanie
-		ParticleSystem smoke; // obsahuje particle system pre dymenie kolies (napr. velka rychlost)
-		Rigidbody2D wheelSprite;
+		
+		for (i = 0; i < wheels.Length; i++) {
+			// posuniem particle systemy spojene s kolesom na zaklade aktualnej pozicie kolesa
+			wheels[i].UpdateParticlesPositions();
 
-		car.breaking = false;
+			// zistim ci dane koleso smykuje
+			wheels[i].SlidingDetection();
 
-		// nacitanie particle systemu
-		dirt = (ParticleSystem) GameObject.Find("bahno").particleSystem;
-		dirt.enableEmission = false;
-		smoke =(ParticleSystem) GameObject.Find("bahno_dym").particleSystem;
-		smoke.enableEmission = false;
+			// zistim ci dane koleso dymi
+			wheels[i].SmokingDetection();
 
-		// nacitam si zoznam vsetkych kolies
-		WheelJoint2D[] wheelsJoint = GetComponents<WheelJoint2D>();
-		car.wheels = new Wheel[wheelsJoint.Length];
+			// jedna sa o pohanane koleso, aktualizujem rychlost
+			if( wheels[i].IsPowered() == true ) {
+				wheels[i].updateSpeed();
 
-		for( i = 0; i < wheelsJoint.Length; i++ ) {
-			// nase upravene koleso inicializujeme zakladnym objektom kolesa
-			newWheel = new Wheel(wheelsJoint[i]);
-
-			// zoberiem si sprite kolesa
-			wheelSprite = wheelsJoint[i].connectedBody;
-
-			// priradim skript na detekciu kolizie
-			motor_wheel collisionScript = wheelSprite.gameObject.AddComponent("motor_wheel") as motor_wheel;
-
-			// do skriptu si zapisem ID kolesa ke keremu patri
-			collisionScript.wheelId = i;
-
-			// skopirujem z objektu auta secky dymy a nastavim ich na pozicie koles (pozor na rozlicne polomery koles)
-			newWheel.smoke = (ParticleSystem) Instantiate(smoke);
-			newWheel.smoke.enableEmission = false;
-
-			// na zaklade prvotnej hodnoty ci je motor zapojeny sa zisti ci sa jedna o koleso pohanane motorem
-			newWheel.powered = wheelsJoint[i].useMotor;
-
-			if ( newWheel.powered ) {
-				// okrem skopirovani dymu skopirujem aj strikani bahna (pozicia sa este uvidi)
-				newWheel.dirt = (ParticleSystem) Instantiate(dirt);
-				newWheel.dirt.enableEmission = false;
+				if ( car.IsGasTankEmpty ()) {
+					wheels[i].TurnOffMotor();
+				}
+			}
+			// jedna sa o nepohanane koleso, aktualizujem stav brzd
+			else {
+				wheels[i].updateBreak();
 			}
 
-			// ulozenie kolesa do pola
-			car.wheels[i] = newWheel;
+			// zapnutie prislusnych particle systemov
+			wheels[i].UpdateParticlesEmissions();
 		}
-
-		this.health = 1000;
-		car.tank = new GasTank ();
-		car.tank.setMaxFill (10000);
 	}
 
-	// Update is called once per frame
-	void Update () {
-		//		ked auto smykluje
-		//			podla tabulky materialu zistim kery smyk mam pouzit (priorita materialu)
-		//			zapnem particle efekt smyku
-		//		ked auto ide moc rychle alebo smykuje
-		//			podla inej tabulky materialu zistim kery dym mam pouzit (priorita materialu)
-		//			zapnem particle efekt dymu
-		//	
-
-		// nastavenie smykovania + dymenia pre jednotlive kolesa
-
-		wheelsParticles ();
-
-		// detekcia smyku
-		sliding ();
-
-		breakingDetection ();
-
-		movement ();
-
-
-/*
-		// spotreba beniznu + kontrola prazdnosti nadrze
-		if (!this.tank.use (Mathf.Abs(direction) + this.neutral)) {
-			// vypnem tah motora (ala neutral)
-			newSpeed = oldSpeed;
-
-			newTorque = 0;
-		}
-		// nadrz nie je prazdna
-		else {
-			mot.motorSpeed = newSpeed;
-			mot.maxMotorTorque = newTorque;
-			kolesoZ.motor = mot;
-		}
-*/
-
-		/*
-		gui.setValue (
-			"Contact:" + groundContact.ToString() + "\n"
-			+ "direction:" + direction.ToString() + "\n"
-			+ "newSpeed:" + newSpeed.ToString() + "\n"
-			+ "newTorque:" + newTorque.ToString() + "\n"
-			+ "kolesoZ.rigidbody2D.velocity.x:" + kolesoZ.rigidbody2D.velocity.x.ToString() + "\n"
-			+ "oldSpeed:" + oldSpeed.ToString() + "\n"
-			+ "smyk:" + smyk.ToString() + "\n"
-			+ "Speed:" + mot.motorSpeed.ToString() + "\n"
-			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill() + "\n"
-			+ "Health:" + this.getHealth()
-		);
-		*/
+	private void updateGasTank() {
+		car.tank.Use ( neutralGasUsage + Mathf.Abs(car.direction));
 	}
+
+	public static bool IsGasTankEmpty() {
+		return car.tank.IsEmpty ();
+	}
+
+	public static bool IsCarBreaking() {
+		return car.breaking;
+	}
+
+	public static float GetDirection() {
+		return car.direction;
+	}
+
+	// TODO: damage
+
+	void OnCollisionEnter2D(Collision2D col)	{
+		if (col.gameObject.name == "GrassThinSprite") {
+			this.makeDamage(col.relativeVelocity.magnitude);
+		}
+	}
+	
+	public static  void makeDamage(float v)	{
+		car.health -= v;
+	}
+	
+	public static float getHealth()	{
+		return car.health;
+	}
+
 }
+
+//		ked auto smykluje
+//			podla tabulky materialu zistim kery smyk mam pouzit (priorita materialu)
+//			zapnem particle efekt smyku
+//		ked auto ide moc rychle alebo smykuje
+//			podla inej tabulky materialu zistim kery dym mam pouzit (priorita materialu)
+//			zapnem particle efekt dymu
+//	

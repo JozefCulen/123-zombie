@@ -1,26 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GasTank : MonoBehaviour {
-	float maxFill;
-	float currentFill;
+public class GasTank {
+	private float maxFill;
+	private float currentFill;
 
-	public void setMaxFill(float max)	{
-		this.maxFill = max;
-		this.fillUp ();
+	public GasTank( float input_maxTankCapacity, float input_defaultTankValue ) {
+		this.maxFill = input_maxTankCapacity;
+		this.currentFill = input_defaultTankValue;
 	}
 
-	public bool use(float x)	{
-		this.currentFill -= x;
+	public void Use(float value)	{
+		this.currentFill -= value;
+
+		// hodnota nadrze nemoze byt zaporna
 		if (this.currentFill < 0) {
 			this.currentFill = 0;
-			return false;
 		}
-		return true;
 	}
 
-	public void fillUp()	{
+	public void Fill(float value)	{
+		this.currentFill += value;
+		
+		// hodnota nadrze nemoze byt vacsia ako maximalny objem
+		if (this.currentFill > this.maxFill) {
+			this.currentFill = this.maxFill;
+		}
+	}
+
+	public void FillUp()	{
 		this.currentFill = this.maxFill;
+	}
+
+	public bool IsEmpty() {
+		return this.currentFill == 0 ? true : false;
 	}
 
 	public float getMaxFill()	{

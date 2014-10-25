@@ -47,10 +47,12 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\2D car\scripts\GasTank.cs" />
+     <Compile Include="Assets\2D car\scripts\Wheel.cs" />
+     <Compile Include="Assets\2D car\scripts\WheelCollision.cs" />
      <Compile Include="Assets\2D car\scripts\car.cs" />
      <Compile Include="Assets\2D car\scripts\follow.cs" />
      <Compile Include="Assets\2D car\scripts\gui.cs" />
-     <Compile Include="Assets\2D car\scripts\motor_wheel.cs" />
+     <Compile Include="Assets\Fuhrer.cs" />
      <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
      <None Include="Assets\Fonts\PressStart2P-Regular\OFL.txt" />
   </ItemGroup>
