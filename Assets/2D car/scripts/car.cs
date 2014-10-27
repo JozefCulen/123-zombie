@@ -55,7 +55,6 @@ public class car : MonoBehaviour {
 			+ "w sliding:" + car.getWheel(car.firstPoweredWheel).sliding.ToString() + "\n"
 			+ "w groundContact:" + car.getWheel(car.firstPoweredWheel).groundContact.ToString() + "\n"
 			+ "w smoking:" + car.getWheel(car.firstPoweredWheel).smoking.ToString() + "\n"
-			+ "w temp:" + car.getWheel(car.firstPoweredWheel).temp.ToString() + "\n"
 			+ "Tank:" + car.tank.getCurrentFill() + "/" + car.tank.getMaxFill() + "\n"
 			+ "Health:" + car.getHealth()
 			);

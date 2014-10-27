@@ -9,16 +9,15 @@ public class Wheel {
 	public bool sliding; // koleso smykuje
 	public bool groundContact; // koleso ma kontakt so zemou
 	public bool smoking; // z kolesa sa generuje dym
-	private bool hugeFallLastEnable; // 
-	private float hugeFallLastTime; //
-	
-	public static float wheelRadius = 0.2f; // velkost kolesa
-	public static float skidConstant = 174;
-	public static float smokingLargeSpeed = 15;
-	public static int maxMotorSpeed = 4000;
-	public static int maxTorgueSpeed = 50;
-	public static int maxTorgueBreak = 175;
-	public float temp;
+	private float hugeFallLastTime; // cas posledneho velkeho dopadu
+	public float wheelRadius; // velkost kolesa
+	public float skidConstant ; // konstanta podla kerej sa rozhoduje ci auto smykuje aleob ne
+
+	public float smokingLargeSpeed = 15;
+	public int maxMotorSpeed = 3000;
+	public int maxTorgueSpeed = 50;
+	public int maxTorgueBreak = 175;
+	public float hugeFallValue = 5f;
 
 	public Wheel(WheelJoint2D jointObject, int input_index, ParticleSystem input_smoke, ParticleSystem input_dirt)
 	{
@@ -40,7 +39,11 @@ public class Wheel {
 		this.sliding = false;
 		this.groundContact = false;
 		this.smoking = false;
-		
+
+		this.wheelRadius = this.joint.connectedBody.gameObject.GetComponent<CircleCollider2D> ().radius;
+
+		this.skidConstant = 57.2957795f / this.wheelRadius;
+
 		// pridanie skriptu pre detekciu kolizie na koleso
 		AttachCollisionScript (jointObject, input_index);
 	}
@@ -61,9 +64,9 @@ public class Wheel {
 	public void UpdateParticlesPositions() {
 		// ak koleso nie je pohanane, tak smyky neriesim
 		if ( this.powered ) {
-			dirt.transform.position = new Vector3 (joint.connectedBody.transform.position.x, joint.connectedBody.transform.position.y - wheelRadius, joint.connectedBody.transform.position.z - 5);
+			dirt.transform.position = new Vector3 (joint.connectedBody.transform.position.x, joint.connectedBody.transform.position.y - 0, joint.connectedBody.transform.position.z - 5);
 		}
-		smoke.transform.position = new Vector3(joint.connectedBody.transform.position.x, joint.connectedBody.transform.position.y - wheelRadius,joint.connectedBody.transform.position.z - 5);
+		smoke.transform.position = new Vector3(joint.connectedBody.transform.position.x, joint.connectedBody.transform.position.y - this.wheelRadius + 0.2f,joint.connectedBody.transform.position.z - 5);
 	}
 
 	public void SlidingDetection() {
@@ -72,9 +75,7 @@ public class Wheel {
 		// pomer rychlosti otacania kolesa a rychlosti kolesa (t.j. aku vzdialenost preslo)
 		skidValue = Mathf.Abs(joint.jointSpeed / joint.rigidbody2D.velocity.magnitude );
 
-		// TODO: prevod na tvar 1.000 +- 0.02
-		this.temp = skidValue;
-		if ( ( skidValue > skidConstant + 60 || skidValue < skidConstant - 60 ) && this.groundContact && joint.rigidbody2D.velocity.x > 0.1f) {
+		if ( (skidValue / skidConstant > 1.03 || skidValue / skidConstant < 0.95) && this.groundContact && joint.rigidbody2D.velocity.x > 0.1f) {
 			this.sliding = true;
 		}
 		else{
@@ -91,7 +92,7 @@ public class Wheel {
 		}
 		
 		// velka rychlost kolesa
-		if ( Mathf.Abs(this.joint.rigidbody2D.velocity.magnitude) > Wheel.smokingLargeSpeed && this.groundContact ) {
+		if ( Mathf.Abs(this.joint.rigidbody2D.velocity.magnitude) > this.smokingLargeSpeed && this.groundContact ) {
 			this.smoking = true;
 		}
 
@@ -185,7 +186,7 @@ public class Wheel {
 	}
 	
 	public void UpdateFallMagnitude( float input_value) {
-		if (input_value > 5) {
+		if (input_value > this.hugeFallValue) {
 			this.hugeFallLastTime = Time.time;
 		}
 	}
