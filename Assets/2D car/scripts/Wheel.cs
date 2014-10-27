@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Wheel {
-	private WheelJoint2D joint; // objekt kde je pripojene koleso
+	public WheelJoint2D joint; // objekt kde je pripojene koleso
 	private bool powered; // je koleso pohanane motorem?
 	private ParticleSystem smoke; // particle system pre dymenie
 	private ParticleSystem dirt; // particle system pre smyk
@@ -17,7 +17,7 @@ public class Wheel {
 	public static float smokingLargeSpeed = 15;
 	public static int maxMotorSpeed = 4000;
 	public static int maxTorgueSpeed = 50;
-	public static int maxTorgueBreak = 50;
+	public static int maxTorgueBreak = 175;
 	public float temp;
 
 	public Wheel(WheelJoint2D jointObject, int input_index, ParticleSystem input_smoke, ParticleSystem input_dirt)
