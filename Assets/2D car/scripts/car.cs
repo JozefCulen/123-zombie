@@ -49,6 +49,8 @@ public class car : MonoBehaviour {
 		gui.setValue (
 			"breaking:" + car.breaking.ToString() + "\n"
 			+ "velocity:" + car.velocity.ToString() + "\n"
+			+ "x motor speed:" + car.getWheel(car.firstPoweredWheel).joint.motor.motorSpeed.ToString() + "\n"
+			+ "x velocity:" + car.getWheel(car.firstPoweredWheel).joint.rigidbody2D.velocity.x.ToString() + "\n"
 			+ "direction:" + car.direction.ToString() + "\n"
 			+ "w sliding:" + car.getWheel(car.firstPoweredWheel).sliding.ToString() + "\n"
 			+ "w groundContact:" + car.getWheel(car.firstPoweredWheel).groundContact.ToString() + "\n"
