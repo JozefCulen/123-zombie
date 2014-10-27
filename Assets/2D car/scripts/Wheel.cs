@@ -73,7 +73,7 @@ public class Wheel {
 		skidValue = Mathf.Abs(joint.jointSpeed / joint.rigidbody2D.velocity.magnitude );
 
 		// TODO: prevod na tvar 1.000 +- 0.02
-		this.temp = skidValue / 173;
+		this.temp = skidValue;
 		if ( ( skidValue > skidConstant + 60 || skidValue < skidConstant - 60 ) && this.groundContact && joint.rigidbody2D.velocity.x > 0.1f) {
 			this.sliding = true;
 		}

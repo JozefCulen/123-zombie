@@ -2,9 +2,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\2D car\scripts\Wheel.cs">
     <Files>
-      <File FileName="123-zombie.sln" Line="1" Column="1" />
-      <File FileName="Assets\2D car\scripts\Wheel.cs" Line="5" Column="8" />
-      <File FileName="Assets\2D car\scripts\car.cs" Line="6" Column="6" />
+      <File FileName="Assets\2D car\scripts\Wheel.cs" Line="75" Column="2" />
+      <File FileName="Assets\2D car\scripts\car.cs" Line="1" Column="1" />
       <File FileName="Assets\2D car\scripts\follow.cs" Line="1" Column="1" />
       <File FileName="Assets\2D car\scripts\GasTank.cs" Line="1" Column="1" />
       <File FileName="Assets\Fuhrer.cs" Line="1" Column="1" />
