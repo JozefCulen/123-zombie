@@ -22,6 +22,8 @@ public class car : MonoBehaviour {
 	public float hugeFallValue = 5f;
 	public int wheelsLevel = 0;
 
+	private float resetPosition;
+
 	void Start () {
 		// inicializacia autovych premenych
 		this.breaking = false;
@@ -36,6 +38,15 @@ public class car : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (Input.GetKeyDown ("space")) {
+			resetPosition = this.transform.position.y + 4.0f;
+			this.transform.position = new Vector3(this.transform.position.x, resetPosition, this.transform.position.z);
+		} else if (Input.GetKey ("space")) {
+			this.transform.position = new Vector3(this.transform.position.x, resetPosition, this.transform.position.z);
+			this.transform.Rotate( new Vector3(0, 0, 200) , 2f);
+		}
+
 		// aktualizovanie ovladania
 		updateCarControl ();
 
