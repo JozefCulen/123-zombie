@@ -15,7 +15,12 @@ public class car : MonoBehaviour {
 	public float health = 1000; // vydrz vozdila (pro damage) po spusteni
 	public float defaultGasTankValue = 5000; // objem nadrze pri spusteni hry
 	public float gasTankCapacity = 10000; // maximalny objem nadrze
-
+	
+	public float smokingLargeSpeed = 15;
+	public int maxTorgueSpeed = 50;
+	public int maxTorgueBreak = 175;
+	public float hugeFallValue = 5f;
+	public int wheelsLevel = 0;
 
 	void Start () {
 		// inicializacia autovych premenych
@@ -49,13 +54,13 @@ public class car : MonoBehaviour {
 		
 		gui.setValue (
 			"breaking:" + this.breaking.ToString() + "\n"
-			+ "velocity:" + this.velocity.ToString() + "\n"
+			+ "velocity:" + this.velocity.ToString() + "\n"/*
 			+ "x motor speed:" + this.getWheel(this.firstPoweredWheel).joint.motor.motorSpeed.ToString() + "\n"
 			+ "x velocity:" + this.getWheel(this.firstPoweredWheel).joint.rigidbody2D.velocity.x.ToString() + "\n"
 			+ "direction:" + this.direction.ToString() + "\n"
 			+ "w sliding:" + this.getWheel(this.firstPoweredWheel).sliding.ToString() + "\n"
 			+ "w groundContact:" + this.getWheel(this.firstPoweredWheel).groundContact.ToString() + "\n"
-			+ "w smoking:" + this.getWheel(this.firstPoweredWheel).smoking.ToString() + "\n"
+			+ "w smoking:" + this.getWheel(this.firstPoweredWheel).smoking.ToString() + "\n"*/
 			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill() + "\n"
 			+ "Health:" + this.getHealth()
 			);
@@ -67,29 +72,67 @@ public class car : MonoBehaviour {
 	
 	private void InitializeAllWheels() {
 		int i; // pomocna iteracna premenna
-		ParticleSystem dirt; // obsahuje particle system pre smykovanie
-		ParticleSystem smoke; // obsahuje particle system pre dymenie kolies (napr. velka rychlost)
-		
+		GameObject wheelPrefab; // kopia kolesa
+		string wheelPrefabName; // nazov objektu kolesa
+		WheelJoint2D wheelJoint; // spoj medzi autem a kolesem
+		/*
 		// nacitanie particle systemu
-		dirt = (ParticleSystem) GameObject.Find("bahno").particleSystem;
+		dirt = ; //GameObject.Find("bahno").particleSystem;
 		dirt.enableEmission = false;
-		smoke =(ParticleSystem) GameObject.Find("bahno_dym").particleSystem;
+		smoke =; //GameObject.Find("bahno_dym").particleSystem;
 		smoke.enableEmission = false;
-		
-		// nacitam si zoznam vsetkych kolies
-		WheelJoint2D[] wheelsJoint = GetComponents<WheelJoint2D>();
+		*/
+		// nacitam si zoznam bodov kde sa pripoja kolesa
+		GameObject[] wheelsAnchor = GameObject.FindGameObjectsWithTag("wheelAnchor");
 
 		// inicializujem si pole do ktoreho ulozim vsetky kolesa
-		this.wheels = new Wheel[wheelsJoint.Length];
+		this.wheels = new Wheel[wheelsAnchor.Length];
 		
-		for( i = 0; i < wheelsJoint.Length; i++ ) {
+		for( i = 0; i < wheelsAnchor.Length; i++ ) {
+			// vytvoreni nazvu objektu kolesa
+			wheelPrefabName = wheelsAnchor[i].GetComponent<WheelAnchor>().wheelType.ToString() + "_" + wheelsLevel.ToString();
+
+			// auto pridam spoj pre koleso
+			wheelJoint = this.gameObject.AddComponent<WheelJoint2D>();
+
+			// skopirujem si objekt kolesa
+			wheelPrefab = (GameObject) GameObject.Instantiate(Resources.Load("prefabs/wheels/"+wheelPrefabName));
+
+			// vytvoreny objekt bude spadat pod auto
+			wheelPrefab.transform.parent = this.transform;
+
+			// nastaveni pozicie kolesa
+			wheelPrefab.transform.position = new Vector3(wheelsAnchor[i].transform.position.x, wheelsAnchor[i].transform.position.y, -0.1f);
+
+			// pripojeni kolesa k bodu pripoju na aute
+			wheelJoint.connectedBody = wheelPrefab.rigidbody2D;
+
+			// nastaveni pozicie bodu pripoju
+			wheelJoint.anchor = new Vector2(wheelsAnchor[i].transform.localPosition.x, wheelsAnchor[i].transform.localPosition.y);
+
+			// pripoj bude pripojeny na stred auta
+			wheelJoint.connectedAnchor = new Vector2(0, 0);
+
+			// inicializacia kolesa
+			wheelPrefab.GetComponent<Wheel>().Wheel2(wheelJoint, i, wheelsAnchor[i].GetComponent<WheelAnchor>().powered);
+
+			// nastaveni parametru tlmicov
+			JointSuspension2D newSuspension = wheelJoint.suspension;
+			newSuspension.dampingRatio = wheelsAnchor[i].GetComponent<WheelAnchor>().suspensionDampingRatio;
+			newSuspension.frequency = wheelsAnchor[i].GetComponent<WheelAnchor>().suspensionFrequency;
+			wheelJoint.suspension = newSuspension;
+
+			// odstranim si pomocny objekt na zaklade kereho sem vedel kam dat koleso
+			Destroy(wheelsAnchor[i]);
+
 			// objekt kolesa transofrmujem do rozsireneho objektu kolesa a ulozim do pola
-			//this.wheels[i] = new Wheel(wheelsJoint[i], i, (ParticleSystem) Instantiate(smoke), (ParticleSystem) Instantiate(dirt));
+			this.wheels[i] = wheelPrefab.GetComponent<Wheel>();
 
 			// jedna sa o prve pohanane koleso v ramci auta
 			if( this.firstPoweredWheel == -1 && this.wheels[i].IsPowered() ) {
 				this.firstPoweredWheel = i;
 			}
+
 		}
 	}
 

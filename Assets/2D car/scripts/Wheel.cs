@@ -1,46 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
+using GlobalVariables;
 
 public class Wheel : MonoBehaviour {
-	public WheelJoint2D joint; // objekt kde je pripojene koleso
+	private WheelJoint2D joint; // objekt kde je pripojene koleso
 	private bool powered; // je koleso pohanane motorem?
 	private ParticleSystem smoke; // particle system pre dymenie
-	private ParticleSystem dirt; // particle system pre smyk
-	public bool sliding; // koleso smykuje
-	public bool groundContact; // koleso ma kontakt so zemou
-	public bool smoking; // z kolesa sa generuje dym
+	private ParticleSystem dirt = null; // particle system pre smyk
+	private bool sliding; // koleso smykuje
+	private bool groundContact; // koleso ma kontakt so zemou
+	private bool smoking; // z kolesa sa generuje dym
 	private float hugeFallLastTime; // cas posledneho velkeho dopadu
-	public float wheelRadius; // velkost kolesa
-	public float skidConstant ; // konstanta podla kerej sa rozhoduje ci auto smykuje aleob ne
+	private float wheelRadius; // velkost kolesa
+	private float skidConstant ; // konstanta podla kerej sa rozhoduje ci auto smykuje aleob ne
 	private car carInstance;
 
-	public float smokingLargeSpeed = 15;
-	public int maxMotorSpeed = 3000;
-	public int maxTorgueSpeed = 50;
-	public int maxTorgueBreak = 175;
-	public float hugeFallValue = 5f;
-	
-	public enum WheelTypeEnum {
-		test1,
-		test2,
-		test3
-	}
-	public WheelTypeEnum WheelType;
+	public constants.WheelTypeEnum wheelType;
+	public int wheelLevel = 0;
 
-	public Wheel(WheelJoint2D jointObject, int input_index, ParticleSystem input_smoke, ParticleSystem input_dirt)
+	public void Wheel2(WheelJoint2D jointObject, int input_index, bool input_powered)
 	{
+		this.carInstance = this.gameObject.transform.parent.GetComponent<car> ();
 		this.joint = jointObject;
-		
-		// na zaklade prvotnej hodnoty ci je motor zapojeny sa zisti ci sa jedna o koleso pohanane motorem
-		this.powered = jointObject.useMotor;
+		this.powered = input_powered;
 		
 		// skopirujem z objektu auta secky dymy a nastavim ich na pozicie koles (pozor na rozlicne polomery koles)
-		this.smoke = input_smoke;
+		this.smoke = (ParticleSystem) Instantiate(Resources.Load("particles/bahno_dym", typeof(ParticleSystem)));
+		this.smoke.transform.parent = carInstance.transform;
 		this.smoke.enableEmission = false;
 		
 		if ( this.powered ) {
 			// okrem skopirovani dymu skopirujem aj strikani bahna (pozicia sa este uvidi)
-			this.dirt = input_dirt;
+			this.dirt = (ParticleSystem) Instantiate(Resources.Load("particles/bahno", typeof(ParticleSystem)));
+			this.dirt.transform.parent = carInstance.transform;
 			this.dirt.enableEmission = false;
 		}
 		
@@ -49,12 +41,12 @@ public class Wheel : MonoBehaviour {
 		this.smoking = false;
 		this.wheelRadius = this.joint.connectedBody.gameObject.GetComponent<CircleCollider2D> ().radius;
 		this.skidConstant = 57.2957795f / this.wheelRadius;
-		this.carInstance = this.gameObject.transform.parent.GetComponent<car> ();;
 
 		// pridanie skriptu pre detekciu kolizie na koleso
 		AttachCollisionScript (jointObject, input_index);
+
 	}
-	
+
 	private void AttachCollisionScript(WheelJoint2D jointObject, int input_index) {
 		Rigidbody2D wheelSprite;
 		
@@ -102,7 +94,7 @@ public class Wheel : MonoBehaviour {
 		}
 		
 		// velka rychlost kolesa
-		if ( Mathf.Abs(this.joint.rigidbody2D.velocity.magnitude) > this.smokingLargeSpeed && this.groundContact ) {
+		if ( Mathf.Abs(this.joint.rigidbody2D.velocity.magnitude) > carInstance.smokingLargeSpeed && groundContact ) {
 			this.smoking = true;
 		}
 
@@ -132,21 +124,21 @@ public class Wheel : MonoBehaviour {
 		// uzivatel stlaca plyn a auto ide do opacneho smeru
 		else if(this.carInstance.GetDirection() * this.joint.rigidbody2D.velocity.x > 0 ) {
 			// zapnem tah motora
-			newMotor.maxMotorTorque = maxTorgueSpeed;
+			newMotor.maxMotorTorque = carInstance.maxTorgueSpeed;
 			
 			// nulova rychlost motora = brzda
 			newMotor.motorSpeed = 0;
 		}
 		// uzivatel stlaca plyn a auto ide do rovnakeho smeru
 		else {
-			newMotor.motorSpeed = this.carInstance.GetDirection() * maxMotorSpeed;
+			newMotor.motorSpeed = this.carInstance.GetDirection() * carInstance.maxMotorSpeed;
 			
 			if( Mathf.Abs(newMotor.motorSpeed) < Mathf.Abs(this.joint.motor.motorSpeed) ) {
 				newMotor.motorSpeed = this.joint.motor.motorSpeed;
 			}
 			
 			// zapnem tah motora
-			newMotor.maxMotorTorque = maxTorgueSpeed;
+			newMotor.maxMotorTorque = carInstance.maxTorgueSpeed;
 			
 			// vypnutie brzdy na prednom kolese
 			this.joint.useMotor = false;	
@@ -163,7 +155,7 @@ public class Wheel : MonoBehaviour {
 
 		if( this.carInstance.IsCarBreaking() == true ) {
 			// zapnem motor (brzdu)
-			newMotor.maxMotorTorque = maxTorgueBreak;
+			newMotor.maxMotorTorque = carInstance.maxTorgueBreak;
 		}
 		else {
 			// vypnem motor (brzdu)
@@ -196,7 +188,7 @@ public class Wheel : MonoBehaviour {
 	}
 	
 	public void UpdateFallMagnitude( float input_value) {
-		if (input_value > this.hugeFallValue) {
+		if (input_value > carInstance.hugeFallValue) {
 			this.hugeFallLastTime = Time.time;
 		}
 	}

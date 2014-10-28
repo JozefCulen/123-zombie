@@ -5,8 +5,12 @@ public class follow : MonoBehaviour {
 
 	public float dampTime = 0.15f;
 	private Vector3 velocity = Vector3.zero;
-	public Transform target;
-	
+	private Transform target;
+
+	void Start () {
+		this.target = GameObject.FindGameObjectWithTag("car").transform;
+	}
+
 	// Update is called once per frame
 	void Update () 
 	{ 
