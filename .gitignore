@@ -218,6 +218,7 @@ pip-log.txt
 #unity
 
 Temp/
+Library\
 output/
 [Ll]ibrary/
 *.sln   
