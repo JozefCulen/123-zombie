@@ -3,26 +3,27 @@ using System.Collections;
 
 
 public class car : MonoBehaviour {
-	private static Wheel[] wheels; // obsahuje pole vsetkych kolies auta
-	private static bool breaking; // status ci auto brzdi
-	private static float velocity; // aktualna rychlost auta (pocitana na zaklade pytagora)
-	private static int firstPoweredWheel; // prve pohanane kolo (v poradi) na zaklade ktoreho sa budu pocitat niektore globalne hodnoty pre cele auto
-	private static GasTank tank; // palivova nadrz vozidla
-	private static float direction; // smer stlacana sipek
+	private Wheel[] wheels; // obsahuje pole vsetkych kolies auta
+	private bool breaking; // status ci auto brzdi
+	private float velocity; // aktualna rychlost auta (pocitana na zaklade pytagora)
+	private int firstPoweredWheel; // prve pohanane kolo (v poradi) na zaklade ktoreho sa budu pocitat niektore globalne hodnoty pre cele auto
+	private GasTank tank; // palivova nadrz vozidla
+	private float direction; // smer stlacana sipek
 
-	public static int maxMotorSpeed = 4000; // maximalna rychlost vozidla
-	public static float neutralGasUsage = 0.2f; // minimalna spotreba paliva
-	public static float health = 1000; // vydrz vozdila (pro damage) po spusteni
-	public static float defaultGasTankValue = 5000; // objem nadrze pri spusteni hry
-	public static float gasTankCapacity = 10000; // maximalny objem nadrze
-	
+	public int maxMotorSpeed = 4000; // maximalna rychlost vozidla
+	public float neutralGasUsage = 0.2f; // minimalna spotreba paliva
+	public float health = 1000; // vydrz vozdila (pro damage) po spusteni
+	public float defaultGasTankValue = 5000; // objem nadrze pri spusteni hry
+	public float gasTankCapacity = 10000; // maximalny objem nadrze
+
+
 	void Start () {
 		// inicializacia autovych premenych
-		car.breaking = false;
-		car.velocity = 0.0f;
-		car.firstPoweredWheel = -1;
-		car.tank = new GasTank ( gasTankCapacity, defaultGasTankValue );
-		car.direction = 0f;
+		this.breaking = false;
+		this.velocity = 0.0f;
+		this.firstPoweredWheel = -1;
+		this.tank = new GasTank ( gasTankCapacity, defaultGasTankValue );
+		this.direction = 0f;
 
 		InitializeAllWheels ();
 	}
@@ -47,21 +48,21 @@ public class car : MonoBehaviour {
 
 		
 		gui.setValue (
-			"breaking:" + car.breaking.ToString() + "\n"
-			+ "velocity:" + car.velocity.ToString() + "\n"
-			+ "x motor speed:" + car.getWheel(car.firstPoweredWheel).joint.motor.motorSpeed.ToString() + "\n"
-			+ "x velocity:" + car.getWheel(car.firstPoweredWheel).joint.rigidbody2D.velocity.x.ToString() + "\n"
-			+ "direction:" + car.direction.ToString() + "\n"
-			+ "w sliding:" + car.getWheel(car.firstPoweredWheel).sliding.ToString() + "\n"
-			+ "w groundContact:" + car.getWheel(car.firstPoweredWheel).groundContact.ToString() + "\n"
-			+ "w smoking:" + car.getWheel(car.firstPoweredWheel).smoking.ToString() + "\n"
-			+ "Tank:" + car.tank.getCurrentFill() + "/" + car.tank.getMaxFill() + "\n"
-			+ "Health:" + car.getHealth()
+			"breaking:" + this.breaking.ToString() + "\n"
+			+ "velocity:" + this.velocity.ToString() + "\n"
+			+ "x motor speed:" + this.getWheel(this.firstPoweredWheel).joint.motor.motorSpeed.ToString() + "\n"
+			+ "x velocity:" + this.getWheel(this.firstPoweredWheel).joint.rigidbody2D.velocity.x.ToString() + "\n"
+			+ "direction:" + this.direction.ToString() + "\n"
+			+ "w sliding:" + this.getWheel(this.firstPoweredWheel).sliding.ToString() + "\n"
+			+ "w groundContact:" + this.getWheel(this.firstPoweredWheel).groundContact.ToString() + "\n"
+			+ "w smoking:" + this.getWheel(this.firstPoweredWheel).smoking.ToString() + "\n"
+			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill() + "\n"
+			+ "Health:" + this.getHealth()
 			);
 	}
 
-	public static Wheel getWheel(int input_index) {
-		return car.wheels[input_index];
+	public Wheel getWheel(int input_index) {
+		return this.wheels[input_index];
 	}
 	
 	private void InitializeAllWheels() {
@@ -79,26 +80,26 @@ public class car : MonoBehaviour {
 		WheelJoint2D[] wheelsJoint = GetComponents<WheelJoint2D>();
 
 		// inicializujem si pole do ktoreho ulozim vsetky kolesa
-		car.wheels = new Wheel[wheelsJoint.Length];
+		this.wheels = new Wheel[wheelsJoint.Length];
 		
 		for( i = 0; i < wheelsJoint.Length; i++ ) {
 			// objekt kolesa transofrmujem do rozsireneho objektu kolesa a ulozim do pola
-			car.wheels[i] = new Wheel(wheelsJoint[i], i, (ParticleSystem) Instantiate(smoke), (ParticleSystem) Instantiate(dirt));
+			//this.wheels[i] = new Wheel(wheelsJoint[i], i, (ParticleSystem) Instantiate(smoke), (ParticleSystem) Instantiate(dirt));
 
 			// jedna sa o prve pohanane koleso v ramci auta
-			if( car.firstPoweredWheel == -1 && car.wheels[i].IsPowered() ) {
-				car.firstPoweredWheel = i;
+			if( this.firstPoweredWheel == -1 && this.wheels[i].IsPowered() ) {
+				this.firstPoweredWheel = i;
 			}
 		}
 	}
 
 	private void updateCarControl() {
-		car.direction = Input.GetAxis ("Vertical");
+		this.direction = Input.GetAxis ("Vertical");
 	}
 
 	private void updateCarVelocity() {
 		// vypocitani rychlosti auta na zaklade pytagorovej vety
-		car.velocity = car.wheels[firstPoweredWheel].GetVelocityMagnitude();
+		this.velocity = this.wheels[firstPoweredWheel].GetVelocityMagnitude();
 	}
 	
 	private void breakingDetection() {
@@ -107,10 +108,10 @@ public class car : MonoBehaviour {
 		
 		// uzivatel stlaca plyn a auto ide do opacneho smeru
 		if (direction * this.rigidbody2D.velocity.x > 0) {
-			car.breaking = true;
+			this.breaking = true;
 		}
 		else {
-			car.breaking = false;
+			this.breaking = false;
 		}
 	}
 
@@ -131,7 +132,7 @@ public class car : MonoBehaviour {
 			if( wheels[i].IsPowered() == true ) {
 				wheels[i].updateSpeed();
 
-				if ( car.IsGasTankEmpty ()) {
+				if ( this.IsGasTankEmpty ()) {
 					wheels[i].TurnOffMotor();
 				}
 			}
@@ -146,19 +147,19 @@ public class car : MonoBehaviour {
 	}
 
 	private void updateGasTank() {
-		car.tank.Use ( neutralGasUsage + Mathf.Abs(car.direction));
+		this.tank.Use ( neutralGasUsage + Mathf.Abs(this.direction));
 	}
 
-	public static bool IsGasTankEmpty() {
-		return car.tank.IsEmpty ();
+	public bool IsGasTankEmpty() {
+		return this.tank.IsEmpty ();
 	}
 
-	public static bool IsCarBreaking() {
-		return car.breaking;
+	public bool IsCarBreaking() {
+		return this.breaking;
 	}
 
-	public static float GetDirection() {
-		return car.direction;
+	public float GetDirection() {
+		return this.direction;
 	}
 
 	// TODO: damage
@@ -169,12 +170,12 @@ public class car : MonoBehaviour {
 		}
 	}
 	
-	public static  void makeDamage(float v)	{
-		car.health -= v;
+	public void makeDamage(float v)	{
+		this.health -= v;
 	}
 	
-	public static float getHealth()	{
-		return car.health;
+	public float getHealth()	{
+		return this.health;
 	}
 
 }
