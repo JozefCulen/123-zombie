@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\2D car\scripts\CustomInput.cs" />
      <Compile Include="Assets\2D car\scripts\GasTank.cs" />
      <Compile Include="Assets\2D car\scripts\GlobalVariables.cs" />
      <Compile Include="Assets\2D car\scripts\Wheel.cs" />

@@ -149,6 +149,8 @@ public class car : MonoBehaviour {
 
 	private void updateCarControl() {
 		this.direction = Input.GetAxis ("Vertical");
+		//this.direction = CustomInput.GetAxis ("Vertical");
+
 	}
 
 	private void updateCarVelocity() {
@@ -157,9 +159,6 @@ public class car : MonoBehaviour {
 	}
 	
 	private void breakingDetection() {
-		//zistenie smeru stlacania sipky
-		float direction = Input.GetAxis ("Vertical");
-		
 		// uzivatel stlaca plyn a auto ide do opacneho smeru
 		if (direction * this.rigidbody2D.velocity.x > 0) {
 			this.breaking = true;
