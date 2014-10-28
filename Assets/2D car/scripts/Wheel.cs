@@ -124,7 +124,7 @@ public class Wheel : MonoBehaviour {
 		// uzivatel stlaca plyn a auto ide do opacneho smeru
 		else if(this.carInstance.GetDirection() * this.joint.rigidbody2D.velocity.x > 0 ) {
 			// zapnem tah motora
-			newMotor.maxMotorTorque = carInstance.maxTorgueSpeed;
+			newMotor.maxMotorTorque = carInstance.maxTorgueBreak;
 			
 			// nulova rychlost motora = brzda
 			newMotor.motorSpeed = 0;
