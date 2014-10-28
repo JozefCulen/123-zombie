@@ -115,6 +115,10 @@ public class Wheel : MonoBehaviour {
 
 		// nie je stlacene ziadne tlacitko
 		if (this.carInstance.GetDirection() == 0) {
+			if( this.joint.motor.motorSpeed * this.joint.rigidbody2D.velocity.x > 0 ) {
+				newMotor.motorSpeed = newMotor.motorSpeed * -1;
+			}
+
 			// vypnem tah motora (ala neutral)
 			newMotor.maxMotorTorque = 0;
 			
