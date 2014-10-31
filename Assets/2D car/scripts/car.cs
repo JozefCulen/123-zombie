@@ -60,7 +60,7 @@ public class car : MonoBehaviour {
 
 		// aktualizovanie rychlosti auta
 		updateCarVelocity();
-		
+
 		// detekcia ci auto brzdi
 		breakingDetection ();
 
@@ -70,6 +70,8 @@ public class car : MonoBehaviour {
 		// aktualizacia kolies
 		updateWheels ();
 
+		// ak sa auto nachadza ve vzduchu tak sa moze otacat
+		updateLean ();
 		
 		gui.setValue (
 			"breaking:" + this.breaking.ToString() + "\n"
@@ -213,6 +215,10 @@ public class car : MonoBehaviour {
 
 	private void updateGasTank() {
 		this.tank.Use ( neutralGasUsage + Mathf.Abs(this.direction));
+	}
+
+	private void updateLean() {
+
 	}
 
 	public bool IsGasTankEmpty() {
