@@ -9,21 +9,21 @@ public class gui : MonoBehaviour {
 		//GUI.Box(new Rect(10,10,100,90), "Loader Menu");
 		GUI.Label(new Rect(10,10,1000,200), value);
 
-		/*
-		if (Input.touchCount > 0) Debug.Log(Input.GetTouch(0).position.x.ToString() + "x" + Input.GetTouch(0).position.y.ToString());
-		// Make the first button. If it is pressed, Application.Loadlevel (1) will be executed
-		if(GUI.Button(new Rect(20,40,80,20), "BRZDA")) {
+	
+
+		/*// Make the first button. If it is pressed, Application.Loadlevel (1) will be executed
+		if(GUI.RepeatButton(new Rect(20,40,80,20), "BRZDA")) {
 			CustomInput.SetAxis ("Vertical", 1);
 		}
 		
 		// Make the second button.
-		else if(GUI.Button(new Rect(500,40,80,20), "PLYN")) {
+		else if(GUI.RepeatButton(new Rect(500,40,80,20), "PLYN")) {
 			CustomInput.SetAxis ("Vertical", -1);
 		}
 		else {
 			CustomInput.SetAxis ("Vertical", 0);
-		}
-		*/
+		}*/
+
 
 	}
 

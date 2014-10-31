@@ -148,8 +148,8 @@ public class car : MonoBehaviour {
 	}
 
 	private void updateCarControl() {
-		this.direction = Input.GetAxis ("Vertical");
-		//this.direction = CustomInput.GetAxis ("Vertical");
+		//this.direction = Input.GetAxis ("Vertical");
+		this.direction = CustomInput.GetAxis ("Vertical");
 
 	}
 
