@@ -17,6 +17,7 @@ public class Wheel : MonoBehaviour {
 
 	public constants.WheelTypeEnum wheelType;
 	public int wheelLevel = 0;
+	public float hugeFallSmokeDelay = 0.3f;
 
 	public void Wheel2(WheelJoint2D jointObject, int input_index, bool input_powered)
 	{
@@ -99,7 +100,7 @@ public class Wheel : MonoBehaviour {
 		}
 
 		// pad z velkej vysky v poslednej dobe
-		if ( Time.time - this.hugeFallLastTime < 0.5f ) {
+		if ( Time.time - this.hugeFallLastTime < hugeFallSmokeDelay ) {
 			this.smoking = true;
 		}
 	}
