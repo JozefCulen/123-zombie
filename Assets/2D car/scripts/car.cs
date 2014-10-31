@@ -38,11 +38,19 @@ public class car : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		/*
 		if (Input.GetKeyDown ("space")) {
 			resetPosition = this.transform.position.y + 4.0f;
 			this.transform.position = new Vector3(this.transform.position.x, resetPosition, this.transform.position.z);
 		} else if (Input.GetKey ("space")) {
+			this.transform.position = new Vector3(this.transform.position.x, resetPosition, this.transform.position.z);
+			this.transform.Rotate( new Vector3(0, 0, 200) , 2f);
+		}
+		*/
+		if (CustomInput.ResetCarJump ()) {
+			resetPosition = this.transform.position.y + 4.0f;
+			this.transform.position = new Vector3(this.transform.position.x, resetPosition, this.transform.position.z);
+		} else if (CustomInput.ResetCarRotate ()) {
 			this.transform.position = new Vector3(this.transform.position.x, resetPosition, this.transform.position.z);
 			this.transform.Rotate( new Vector3(0, 0, 200) , 2f);
 		}
@@ -149,8 +157,8 @@ public class car : MonoBehaviour {
 
 	private void updateCarControl() {
 		//this.direction = Input.GetAxis ("Vertical");
-		this.direction = CustomInput.GetAxis ("Vertical");
-
+		//this.direction = CustomInput.GetAxis ("Vertical");
+		this.direction = CustomInput.GetDirection ();
 	}
 
 	private void updateCarVelocity() {
@@ -197,6 +205,10 @@ public class car : MonoBehaviour {
 			// zapnutie prislusnych particle systemov
 			wheels[i].UpdateParticlesEmissions();
 		}
+	}
+	
+	public void gasTankFill(int value) {
+		this.tank.Fill ( value);
 	}
 
 	private void updateGasTank() {
