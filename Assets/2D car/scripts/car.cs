@@ -9,6 +9,13 @@ public class car : MonoBehaviour {
 	private int firstPoweredWheel; // prve pohanane kolo (v poradi) na zaklade ktoreho sa budu pocitat niektore globalne hodnoty pre cele auto
 	private GasTank tank; // palivova nadrz vozidla
 	private float direction; // smer stlacana sipek
+	private float resetPosition;
+	private bool wheelsCollisionAny;
+	private bool carCollisionAny;
+	private float noCollisionAny;
+	private float leaningDirectionLast;
+	private float leaningDirection;
+	private float leaningValue;
 
 	public int maxMotorSpeed = 4000; // maximalna rychlost vozidla
 	public float neutralGasUsage = 0.2f; // minimalna spotreba paliva
@@ -22,7 +29,6 @@ public class car : MonoBehaviour {
 	public float hugeFallValue = 5f;
 	public int wheelsLevel = 0;
 
-	private float resetPosition;
 
 	void Start () {
 		// inicializacia autovych premenych
@@ -31,6 +37,11 @@ public class car : MonoBehaviour {
 		this.firstPoweredWheel = -1;
 		this.tank = new GasTank ( gasTankCapacity, defaultGasTankValue );
 		this.direction = 0f;
+		this.wheelsCollisionAny = false;
+		this.carCollisionAny = false;
+		this.leaningDirectionLast = 0;
+		this.leaningDirection = 0;
+		this.leaningValue = 0;
 
 		InitializeAllWheels ();
 	}
@@ -38,15 +49,6 @@ public class car : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		/*
-		if (Input.GetKeyDown ("space")) {
-			resetPosition = this.transform.position.y + 4.0f;
-			this.transform.position = new Vector3(this.transform.position.x, resetPosition, this.transform.position.z);
-		} else if (Input.GetKey ("space")) {
-			this.transform.position = new Vector3(this.transform.position.x, resetPosition, this.transform.position.z);
-			this.transform.Rotate( new Vector3(0, 0, 200) , 2f);
-		}
-		*/
 		if (CustomInput.ResetCarJump ()) {
 			resetPosition = this.transform.position.y + 4.0f;
 			this.transform.position = new Vector3(this.transform.position.x, resetPosition, this.transform.position.z);
@@ -72,20 +74,35 @@ public class car : MonoBehaviour {
 
 		// ak sa auto nachadza ve vzduchu tak sa moze otacat
 		updateLean ();
-		
+
+
 		gui.setValue (
-			"breaking:" + this.breaking.ToString() + "\n"
-			+ "velocity:" + this.velocity.ToString() + "\n"/*
-			+ "x motor speed:" + this.getWheel(this.firstPoweredWheel).joint.motor.motorSpeed.ToString() + "\n"
-			+ "x velocity:" + this.getWheel(this.firstPoweredWheel).joint.rigidbody2D.velocity.x.ToString() + "\n"
-			+ "direction:" + this.direction.ToString() + "\n"
-			+ "w sliding:" + this.getWheel(this.firstPoweredWheel).sliding.ToString() + "\n"
-			+ "w groundContact:" + this.getWheel(this.firstPoweredWheel).groundContact.ToString() + "\n"
-			+ "w smoking:" + this.getWheel(this.firstPoweredWheel).smoking.ToString() + "\n"*/
+			"Velocity:" + this.velocity.ToString() + "\n"
+			+ "wheelsCollisionAny:" + this.wheelsCollisionAny.ToString() + "\n"
+			+ "carCollisionAny:" + this.carCollisionAny.ToString() + "\n"
+			+ "leaningDirection:" + this.leaningDirection.ToString() + "\n"
+			+ "leaningValue:" + this.leaningValue.ToString() + "\n"
 			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill() + "\n"
 			+ "Health:" + this.getHealth()
 			);
 	}
+
+	void OnCollisionEnter2D(Collision2D col)	{
+		this.carCollisionAny = true;
+
+		if (col.gameObject.name == "GrassThinSprite") {
+			this.makeDamage(col.relativeVelocity.magnitude);
+		}
+	}
+	
+	void OnCollisionExit2D(Collision2D col)	{
+		this.carCollisionAny = false;
+	}
+	
+	void OnCollisionStay2D(Collision2D col)	{
+		this.carCollisionAny = true;
+	}
+
 
 	public Wheel getWheel(int input_index) {
 		return this.wheels[input_index];
@@ -180,6 +197,7 @@ public class car : MonoBehaviour {
 
 	private void updateWheels() {
 		int i; // pomocna iteracna premenna
+		this.wheelsCollisionAny = false;
 		
 		for (i = 0; i < wheels.Length; i++) {
 			// posuniem particle systemy spojene s kolesom na zaklade aktualnej pozicie kolesa
@@ -206,6 +224,10 @@ public class car : MonoBehaviour {
 
 			// zapnutie prislusnych particle systemov
 			wheels[i].UpdateParticlesEmissions();
+
+			if( wheels[i].GetCollisionAny() ) {
+				this.wheelsCollisionAny = true;
+			}
 		}
 	}
 	
@@ -218,7 +240,62 @@ public class car : MonoBehaviour {
 	}
 
 	private void updateLean() {
+		float jakDlhoZrychluje = 2.0f;
+		float jakDlhoSpomaluje = 0.5f;
+		float jakRychloZrychluje = 5.0f;
+		float jakDlhoVeVzduchu = 0.5f;
 
+		// auto ani koleso nie je v ziadnej kolizii
+		if( !this.wheelsCollisionAny && !this.carCollisionAny ) {
+			leaningDirectionLast += Time.deltaTime;
+			// auto sa v smere/proti smere hodinovej rucicky
+			if( leaningDirection != 0) {
+				leaningDirection = CustomInput.GetDirection();
+
+				// uzivatel stlaca sipku do smeru naklanani vozidla
+				if( CustomInput.GetDirection() * leaningDirection > 0 ) {
+					// zrychlim rychlost naklanani
+					leaningValue += Time.deltaTime * (jakRychloZrychluje / jakDlhoZrychluje);
+					if( leaningValue > jakRychloZrychluje ) {
+						leaningValue = jakRychloZrychluje;
+					}
+				} else {
+					// ak uzivatel prestal stlacat sipku otacana, zacne sa spomalovat se zrychlovanim
+					leaningValue -= Time.deltaTime * (jakDlhoSpomaluje / jakDlhoZrychluje);
+
+					// ak uzivatel navyse stlaca sipku do opacneho smeru naklanani, tak spomaleni zrychli
+					if(CustomInput.GetDirection() < 0 ) {
+						leaningValue -= Time.deltaTime * (jakRychloZrychluje / jakDlhoZrychluje);
+					}
+
+					// aj ked uzivatel stlaca sipku do opacneho smeru, vzdycky auto musi prejst cez nulovu uroven naklanani
+					if( leaningValue < 0 ) {
+						leaningValue = 0;
+						leaningDirection = 0;
+					}
+				}
+			// auto sa zatial nenaklana
+			} else if ( leaningDirectionLast >= jakDlhoVeVzduchu ) {
+				// nastavim smer a silu otacania
+				leaningDirection = CustomInput.GetDirection();
+
+				if( leaningDirection != 0) {
+					leaningValue = Time.deltaTime * (jakRychloZrychluje / jakDlhoZrychluje);
+
+					// zablokujem otacanie fyzickalnym enginom
+					this.gameObject.rigidbody2D.fixedAngle = true;
+				}
+			}
+			this.transform.Rotate( new Vector3(0, 0, 50 * leaningDirection) , 1f);
+		// pri lubovolnej kolizii zastavim aktualne otacanie
+		} else {
+			leaningDirectionLast = 0;
+			leaningDirection = 0;
+			leaningValue = 0;
+
+			// povolim otacanie fyzickalnym enginom
+			this.gameObject.rigidbody2D.fixedAngle = false;
+		}
 	}
 
 	public bool IsGasTankEmpty() {
@@ -235,12 +312,6 @@ public class car : MonoBehaviour {
 
 	// TODO: damage
 
-	void OnCollisionEnter2D(Collision2D col)	{
-		if (col.gameObject.name == "GrassThinSprite") {
-			this.makeDamage(col.relativeVelocity.magnitude);
-		}
-	}
-	
 	public void makeDamage(float v)	{
 		this.health -= v;
 	}

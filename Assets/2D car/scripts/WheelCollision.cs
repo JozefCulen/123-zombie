@@ -14,6 +14,7 @@ public class WheelCollision : MonoBehaviour {
 			// odoslem informaciu o velkosti kolizie
 			this.carInstance.getWheel(wheelId).UpdateFallMagnitude (col.relativeVelocity.magnitude);
 		}
+		this.carInstance.getWheel(wheelId).SetCollisionAny (true);
 	}
 	
 	void OnCollisionExit2D(Collision2D col)	{
@@ -21,6 +22,7 @@ public class WheelCollision : MonoBehaviour {
 			// nastavim priznak kolizie na kolese
 			this.carInstance.getWheel(wheelId).UpdateGroundContact (false);
 		}
+		this.carInstance.getWheel(wheelId).SetCollisionAny (false);
 	}
 	
 	void OnCollisionStay2D(Collision2D col)	{
@@ -28,6 +30,7 @@ public class WheelCollision : MonoBehaviour {
 			// nastavim priznak kolizie na kolese
 			this.carInstance.getWheel(wheelId).UpdateGroundContact (true);
 		}
+		this.carInstance.getWheel(wheelId).SetCollisionAny (true);
 	}
 
 }

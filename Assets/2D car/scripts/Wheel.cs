@@ -14,6 +14,7 @@ public class Wheel : MonoBehaviour {
 	private float wheelRadius; // velkost kolesa
 	private float skidConstant ; // konstanta podla kerej sa rozhoduje ci auto smykuje aleob ne
 	private car carInstance;
+	private bool collisionAny;
 
 	public constants.WheelTypeEnum wheelType;
 	public int wheelLevel = 0;
@@ -42,6 +43,7 @@ public class Wheel : MonoBehaviour {
 		this.smoking = false;
 		this.wheelRadius = this.joint.connectedBody.gameObject.GetComponent<CircleCollider2D> ().radius;
 		this.skidConstant = 57.2957795f / this.wheelRadius;
+		this.collisionAny = false;
 
 		// pridanie skriptu pre detekciu kolizie na koleso
 		AttachCollisionScript (jointObject, input_index);
@@ -196,5 +198,13 @@ public class Wheel : MonoBehaviour {
 		if (input_value > carInstance.hugeFallValue) {
 			this.hugeFallLastTime = Time.time;
 		}
+	}
+
+	public void SetCollisionAny(bool value) {
+		this.collisionAny = value;
+	}
+
+	public bool GetCollisionAny() {
+		return this.collisionAny;
 	}
 }
