@@ -29,6 +29,9 @@ public class car : MonoBehaviour {
 	public float hugeFallValue = 5f;
 	public int wheelsLevel = 0;
 
+	public float jakDlhoZrychluje = 2.0f;
+	public float jakDlhoSpomaluje = 0.5f;
+	public float jakRychloZrychluje = 5.0f;
 
 	void Start () {
 		// inicializacia autovych premenych
@@ -240,9 +243,6 @@ public class car : MonoBehaviour {
 	}
 
 	private void updateLean() {
-		float jakDlhoZrychluje = 2.0f;
-		float jakDlhoSpomaluje = 0.5f;
-		float jakRychloZrychluje = 5.0f;
 		float jakDlhoVeVzduchu = 0.5f;
 
 		// auto ani koleso nie je v ziadnej kolizii
@@ -250,7 +250,7 @@ public class car : MonoBehaviour {
 			leaningDirectionLast += Time.deltaTime;
 			// auto sa v smere/proti smere hodinovej rucicky
 			if( leaningDirection != 0) {
-				leaningDirection = CustomInput.GetDirection();
+				leaningDirection = CustomInput.GetDirection() * -1;
 
 				// uzivatel stlaca sipku do smeru naklanani vozidla
 				if( CustomInput.GetDirection() * leaningDirection > 0 ) {
@@ -277,7 +277,7 @@ public class car : MonoBehaviour {
 			// auto sa zatial nenaklana
 			} else if ( leaningDirectionLast >= jakDlhoVeVzduchu ) {
 				// nastavim smer a silu otacania
-				leaningDirection = CustomInput.GetDirection();
+				leaningDirection = CustomInput.GetDirection() * -1;
 
 				if( leaningDirection != 0) {
 					leaningValue = Time.deltaTime * (jakRychloZrychluje / jakDlhoZrychluje);
