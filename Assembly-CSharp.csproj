@@ -56,6 +56,7 @@
      <Compile Include="Assets\2D car\scripts\car.cs" />
      <Compile Include="Assets\2D car\scripts\follow.cs" />
      <Compile Include="Assets\2D car\scripts\gui.cs" />
+     <Compile Include="Assets\Menu\scripts\MenuMouseHandler.cs" />
      <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
      <None Include="Assets\Fonts\PressStart2P-Regular\OFL.txt" />
   </ItemGroup>
