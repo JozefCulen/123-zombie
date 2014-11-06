@@ -56,8 +56,26 @@
      <Compile Include="Assets\2D car\scripts\car.cs" />
      <Compile Include="Assets\2D car\scripts\follow.cs" />
      <Compile Include="Assets\2D car\scripts\gui.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\Extensions.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\MeshPiece.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\PrefabManager.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\PrefabPool.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\PrefabRule.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\RenderQueue.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\Settings.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\TerrainDisplayer.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\TerrainManager.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\TerrainPiece.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\TerrainPool.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\TerrainRule.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\TransformHelpers.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Core\Scripts\VertexGenerator.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Demos\Scripts\ChaseCamera.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Demos\Scripts\CoinPickup.cs" />
+     <Compile Include="Assets\Endless2DTerrain\Demos\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Menu\scripts\MenuMouseHandler.cs" />
      <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
+     <None Include="Assets\Endless2DTerrain\Demos\Resources\Shaders\VertexColorUnlit.shader" />
      <None Include="Assets\Fonts\PressStart2P-Regular\OFL.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
