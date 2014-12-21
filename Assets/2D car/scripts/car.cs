@@ -186,6 +186,7 @@ public class car : MonoBehaviour {
 	private void updateCarVelocity() {
 		// vypocitani rychlosti auta na zaklade pytagorovej vety
 		this.velocity = this.wheels[firstPoweredWheel].GetVelocityMagnitude();
+		gui.speedMeterValue = this.velocity / (this.maxMotorSpeed / 20.0f);
 	}
 	
 	private void breakingDetection() {

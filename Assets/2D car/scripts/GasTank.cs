@@ -8,6 +8,7 @@ public class GasTank {
 	public GasTank( float input_maxTankCapacity, float input_defaultTankValue ) {
 		this.maxFill = input_maxTankCapacity;
 		this.currentFill = input_defaultTankValue;
+		gui.gasRemainingValue = 1.0f;
 	}
 
 	public void Use(float value)	{
@@ -17,6 +18,8 @@ public class GasTank {
 		if (this.currentFill < 0) {
 			this.currentFill = 0;
 		}
+
+		gui.gasRemainingValue = this.currentFill / this.maxFill;
 	}
 
 	public void Fill(float value)	{
@@ -26,6 +29,8 @@ public class GasTank {
 		if (this.currentFill > this.maxFill) {
 			this.currentFill = this.maxFill;
 		}
+
+		gui.gasRemainingValue = this.currentFill / this.maxFill;
 	}
 
 	public void FillUp()	{
