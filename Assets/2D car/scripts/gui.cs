@@ -75,11 +75,11 @@ public class gui : MonoBehaviour {
 		float guiSizeX = 128.0f;
 		float guiSizeY = 128.0f;
 		float guiPositionX = Screen.width / 2.0f - guiSizeX - 50.0f;
-		float guiPositionY = Screen.height / 2.0f;
+		float guiPositionY = Screen.height - 180;
 		float pivotPointShift = 25.0f;
 		float pivotAngleRange = 270.0f;
 
-		GUI.Label(new Rect(Screen.width / 2.0f - guiSizeX - 68, Screen.height / 2.0f + 20, 170, 170), speedMeterBackground);
+		GUI.Label(new Rect(Screen.width / 2.0f - guiSizeX - 68, Screen.height - 165, 170, 170), speedMeterBackground);
 
 		Rect guiRect = new Rect(guiPositionX, guiPositionY, guiSizeX, guiSizeY);
 		float xValue = ((guiRect.x + guiRect.width / 2.0f));
@@ -98,11 +98,11 @@ public class gui : MonoBehaviour {
 		float guiSizeX = 128.0f;
 		float guiSizeY = 128.0f;
 		float guiPositionX = Screen.width / 2.0f + 50.0f;
-		float guiPositionY = Screen.height / 2.0f;
+		float guiPositionY = Screen.height - 180;
 		float pivotPointShift = 25.0f;
 		float pivotAngleRange = 120.0f;
 		
-		GUI.Label(new Rect(Screen.width / 2.0f + guiSizeX - 97, Screen.height / 2.0f + 20, 170, 170), gasRemainingBackground);
+		GUI.Label(new Rect(Screen.width / 2.0f + guiSizeX - 97, Screen.height - 165, 170, 170), gasRemainingBackground);
 
 		Rect guiRect = new Rect(guiPositionX, guiPositionY, guiSizeX, guiSizeY);
 		float xValue = ((guiRect.x + guiRect.width / 2.0f));
