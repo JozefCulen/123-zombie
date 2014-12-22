@@ -316,6 +316,7 @@ public class car : MonoBehaviour {
 	
 	public void addCoins(int value) {
 		this.score += value;
+		gui.score = this.score;
 	}
 
 	// TODO: damage

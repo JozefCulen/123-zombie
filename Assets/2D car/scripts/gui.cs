@@ -7,8 +7,16 @@ public class gui : MonoBehaviour {
 	public Texture2D speedMeterBackground;
 	public Texture2D gasRemainingPointer;
 	public Texture2D gasRemainingBackground;
+	public float temp1 = 0.0f;
+	public float temp2 = 0.0f;
+	public float temp3 = 128.0f;
+	public float temp4 = 0.0f;
 	static public float speedMeterValue = 0.0f;
 	static public float gasRemainingValue = 0.0f;
+	public Texture2D scoreIcon;
+	static public double score = 0.0f;
+	public GUIStyle scoreStyle;
+
 
 	void OnGUI () {
 		//Screen.width
@@ -16,7 +24,7 @@ public class gui : MonoBehaviour {
 
 		// Make a background box
 		//GUI.Box(new Rect(10,10,100,90), "Loader Menu");
-		GUI.Label(new Rect(10,10,1000,200), value);
+		GUI.Label(new Rect(300, 10, 1000, 200), value);
 		/*
 		if (GUI.Button (new Rect (10,10, 100, 50), icon)) {
 			print ("you clicked the icon");
@@ -25,7 +33,7 @@ public class gui : MonoBehaviour {
 
 		drawSpeedMeter();
 		drawGasRemaining();
-
+		drawScore();
 
 		/*
 		Rect guiRect = new Rect(Screen.width / 2.0f, Screen.height / 2.0f, 128.0f, 128.0f);
@@ -56,7 +64,12 @@ public class gui : MonoBehaviour {
 
 
 	}
-
+	
+	private void drawScore()
+	{
+		GUI.Label(new Rect(0, 0, 64, 64), scoreIcon);
+		GUI.Label(new Rect(56, 0, 64, 64), score.ToString() , scoreStyle);
+	}
 	private void drawSpeedMeter()
 	{
 		float guiSizeX = 128.0f;
