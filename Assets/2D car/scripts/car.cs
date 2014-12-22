@@ -33,6 +33,8 @@ public class car : MonoBehaviour {
 	public float jakDlhoSpomaluje = 0.5f;
 	public float jakRychloZrychluje = 5.0f;
 
+	public double score = 0.0;
+
 	void Start () {
 		// inicializacia autovych premenych
 		this.breaking = false;
@@ -86,6 +88,7 @@ public class car : MonoBehaviour {
 			+ "leaningDirection:" + this.leaningDirection.ToString() + "\n"
 			+ "leaningValue:" + this.leaningValue.ToString() + "\n"
 			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill() + "\n"
+			+ "Score:" + this.score + "\n"
 			+ "Health:" + this.getHealth()
 			);
 	}
@@ -309,6 +312,10 @@ public class car : MonoBehaviour {
 
 	public float GetDirection() {
 		return this.direction;
+	}
+	
+	public void addCoins(int value) {
+		this.score += value;
 	}
 
 	// TODO: damage
