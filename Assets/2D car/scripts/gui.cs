@@ -16,6 +16,8 @@ public class gui : MonoBehaviour {
 	public Texture2D scoreIcon;
 	static public double score = 0.0f;
 	public GUIStyle scoreStyle;
+	static public float startTime;
+	static public float finishTime;
 
 	public GUISkin skin = null;
 	public float widthPercent = 0.5f;
@@ -87,8 +89,8 @@ public class gui : MonoBehaviour {
 	void drawFinish(Rect r)	{
 		GUILayout.BeginArea(r);
 		GUILayout.BeginVertical("box");
-		
-		GUILayout.Label( "Elapsed time: 1m 10s" , scoreStyle);
+
+		GUILayout.Label( "Elapsed time: "+ (gui.finishTime - gui.startTime).ToString() +"s" , scoreStyle);
 		GUILayout.Label( "Earned score: " + score.ToString() , scoreStyle);
 		GUILayout.Label( "Best score: 0", scoreStyle);
 

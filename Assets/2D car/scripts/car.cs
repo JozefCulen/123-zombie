@@ -323,12 +323,16 @@ public class car : MonoBehaviour {
 	}
 	
 	public void HitFinish() {
-		this.finish = true;
-		gui.finish = true;
+		if (!this.finish) {
+			gui.finishTime = Time.time;
+			this.finish = true;
+			gui.finish = true;
+		}
 	}
 	
 	public bool GetFinish() {
 		return this.finish;
+		gui.startTime = Time.time;
 	}
 
 	// TODO: damage
