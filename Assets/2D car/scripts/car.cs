@@ -16,6 +16,7 @@ public class car : MonoBehaviour {
 	private float leaningDirectionLast;
 	private float leaningDirection;
 	private float leaningValue;
+	private bool finish;
 
 	public int maxMotorSpeed = 4000; // maximalna rychlost vozidla
 	public float neutralGasUsage = 0.2f; // minimalna spotreba paliva
@@ -33,6 +34,8 @@ public class car : MonoBehaviour {
 	public float jakDlhoSpomaluje = 0.5f;
 	public float jakRychloZrychluje = 5.0f;
 
+	public double score = 0.0;
+
 	void Start () {
 		// inicializacia autovych premenych
 		this.breaking = false;
@@ -45,6 +48,7 @@ public class car : MonoBehaviour {
 		this.leaningDirectionLast = 0;
 		this.leaningDirection = 0;
 		this.leaningValue = 0;
+		this.finish = false;
 
 		InitializeAllWheels ();
 	}
@@ -86,6 +90,7 @@ public class car : MonoBehaviour {
 			+ "leaningDirection:" + this.leaningDirection.ToString() + "\n"
 			+ "leaningValue:" + this.leaningValue.ToString() + "\n"
 			+ "Tank:" + this.tank.getCurrentFill() + "/" + this.tank.getMaxFill() + "\n"
+			+ "Score:" + this.score + "\n"
 			+ "Health:" + this.getHealth()
 			);
 	}
@@ -191,7 +196,7 @@ public class car : MonoBehaviour {
 	
 	private void breakingDetection() {
 		// uzivatel stlaca plyn a auto ide do opacneho smeru
-		if (direction * this.rigidbody2D.velocity.x > 0) {
+		if (direction * this.rigidbody2D.velocity.x > 0 || this.finish) {
 			this.breaking = true;
 		}
 		else {
@@ -240,14 +245,15 @@ public class car : MonoBehaviour {
 	}
 
 	private void updateGasTank() {
-		this.tank.Use ( neutralGasUsage + Mathf.Abs(this.direction));
+		if(!this.finish)
+			this.tank.Use ( neutralGasUsage + Mathf.Abs(this.direction));
 	}
 
 	private void updateLean() {
 		float jakDlhoVeVzduchu = 0.5f;
 
 		// auto ani koleso nie je v ziadnej kolizii
-		if( !this.wheelsCollisionAny && !this.carCollisionAny ) {
+		if( !this.wheelsCollisionAny && !this.carCollisionAny && !this.finish ) {
 			leaningDirectionLast += Time.deltaTime;
 			// auto sa v smere/proti smere hodinovej rucicky
 			if( leaningDirection != 0) {
@@ -309,6 +315,24 @@ public class car : MonoBehaviour {
 
 	public float GetDirection() {
 		return this.direction;
+	}
+	
+	public void addCoins(int value) {
+		this.score += value;
+		gui.score = this.score;
+	}
+	
+	public void HitFinish() {
+		if (!this.finish) {
+			gui.finishTime = Time.time;
+			this.finish = true;
+			gui.finish = true;
+		}
+	}
+	
+	public bool GetFinish() {
+		return this.finish;
+		gui.startTime = Time.time;
 	}
 
 	// TODO: damage

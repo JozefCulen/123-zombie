@@ -46,7 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\2D car\scripts\Coin.cs" />
      <Compile Include="Assets\2D car\scripts\CustomInput.cs" />
+     <Compile Include="Assets\2D car\scripts\Finish.cs" />
      <Compile Include="Assets\2D car\scripts\Gas.cs" />
      <Compile Include="Assets\2D car\scripts\GasTank.cs" />
      <Compile Include="Assets\2D car\scripts\GlobalVariables.cs" />
@@ -75,6 +77,7 @@
      <Compile Include="Assets\Endless2DTerrain\Demos\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Menu\scripts\Menu.cs" />
      <Compile Include="Assets\Menu\scripts\MenuMouseHandler.cs" />
+     <None Include="Assets\Fonts\LuckiestGuy\Fonthead Standard EULA.txt" />
      <None Include="Assets\Fonts\LuckiestGuy\LICENSE.txt" />
      <None Include="Assets\Endless2DTerrain\Demos\Resources\Shaders\VertexColorUnlit.shader" />
      <None Include="Assets\Fonts\PressStart2P-Regular\OFL.txt" />

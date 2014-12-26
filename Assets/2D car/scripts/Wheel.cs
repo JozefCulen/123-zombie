@@ -117,7 +117,7 @@ public class Wheel : MonoBehaviour {
 		JointMotor2D newMotor = this.joint.motor; // objekt motora, ktorym sa nahradi ten aktualny
 
 		// nie je stlacene ziadne tlacitko
-		if (this.carInstance.GetDirection() == 0) {
+		if (!this.carInstance.GetFinish() && this.carInstance.GetDirection() == 0) {
 			if( this.joint.motor.motorSpeed * this.joint.rigidbody2D.velocity.x > 0 ) {
 				newMotor.motorSpeed = newMotor.motorSpeed * -1;
 			}
@@ -129,7 +129,7 @@ public class Wheel : MonoBehaviour {
 			this.joint.useMotor = false;
 		}
 		// uzivatel stlaca plyn a auto ide do opacneho smeru
-		else if(this.carInstance.GetDirection() * this.joint.rigidbody2D.velocity.x > 0 ) {
+		else if(this.carInstance.GetFinish() || this.carInstance.GetDirection() * this.joint.rigidbody2D.velocity.x > 0 ) {
 			// zapnem tah motora
 			newMotor.maxMotorTorque = carInstance.maxTorgueBreak;
 			
