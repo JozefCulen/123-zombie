@@ -324,6 +324,7 @@ public class car : MonoBehaviour {
 	
 	public void HitFinish() {
 		this.finish = true;
+		gui.finish = true;
 	}
 	
 	public bool GetFinish() {

@@ -9,6 +9,7 @@ public class follow : MonoBehaviour {
 
 	void Start () {
 		this.target = GameObject.FindGameObjectWithTag("car").transform;
+		gui.finish = false;
 	}
 
 	// Update is called once per frame

@@ -17,6 +17,16 @@ public class gui : MonoBehaviour {
 	static public double score = 0.0f;
 	public GUIStyle scoreStyle;
 
+	public GUISkin skin = null;
+	public float widthPercent = 0.5f;
+	public float heightPercent = 0.5f;
+	public Texture2D logo = null;
+	static public bool finish = false;
+	public string optionQuality = "Medium";
+	public string optionParticles = "ON";
+	public string optionSounds = "ON";
+	
+	protected string level = "APC-test";
 
 	void OnGUI () {
 		//Screen.width
@@ -62,9 +72,36 @@ public class gui : MonoBehaviour {
 			CustomInput.SetAxis ("Vertical", 0);
 		}*/
 
+		GUI.skin = this.skin;
+		Rect r = new Rect(Screen.width * (1 - widthPercent) / 2,
+		                  Screen.height * (1 - heightPercent) / 2,
+		                  Screen.width * widthPercent,
+		                  Screen.height * heightPercent); 
+		
+		if (gui.finish) {
+			drawFinish(r);
+		}
 
 	}
 	
+	void drawFinish(Rect r)	{
+		GUILayout.BeginArea(r);
+		GUILayout.BeginVertical("box");
+		
+		GUILayout.Label( "Elapsed time: 1m 10s" , scoreStyle);
+		GUILayout.Label( "Earned score: " + score.ToString() , scoreStyle);
+		GUILayout.Label( "Best score: 0", scoreStyle);
+
+		if (GUILayout.Button("Restart"))
+			Application.LoadLevel(this.level);
+		
+		if (GUILayout.Button("Quit"))
+			Application.LoadLevel("menu");
+
+		GUILayout.EndVertical();
+		GUILayout.EndArea();
+	}
+
 	private void drawScore()
 	{
 		GUI.Label(new Rect(0, 0, 64, 64), scoreIcon);
