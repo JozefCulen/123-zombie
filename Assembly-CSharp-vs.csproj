@@ -74,6 +74,7 @@
      <Compile Include="Assets\Endless2DTerrain\Demos\Scripts\ChaseCamera.cs" />
      <Compile Include="Assets\Endless2DTerrain\Demos\Scripts\CoinPickup.cs" />
      <Compile Include="Assets\Endless2DTerrain\Demos\Scripts\PlayerMovement.cs" />
+     <Compile Include="Assets\Finish.cs" />
      <Compile Include="Assets\Menu\scripts\Menu.cs" />
      <Compile Include="Assets\Menu\scripts\MenuMouseHandler.cs" />
      <None Include="Assets\Fonts\LuckiestGuy\Fonthead Standard EULA.txt" />
