@@ -82,6 +82,7 @@ public class CustomInput : MonoBehaviour{
 		//cam = GameObject.FindGameObjectWithTag("MainCamera").camera;
 	}
 	void Update(){
+		if (gui.paused) return;
 		if (Input.touchCount > 3) {
 			Application.LoadLevel ("APC-test"); 
 			// Input.touchCount = 1 alebo 2

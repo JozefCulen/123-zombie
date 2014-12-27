@@ -49,13 +49,14 @@ public class car : MonoBehaviour {
 		this.leaningDirection = 0;
 		this.leaningValue = 0;
 		this.finish = false;
-
 		InitializeAllWheels ();
 	}
 
 	
 	// Update is called once per frame
 	void Update () {
+		if (gui.paused) return;
+
 		if (CustomInput.ResetCarJump ()) {
 			resetPosition = this.transform.position.y + 4.0f;
 			this.transform.position = new Vector3(this.transform.position.x, resetPosition, this.transform.position.z);
@@ -332,7 +333,6 @@ public class car : MonoBehaviour {
 	
 	public bool GetFinish() {
 		return this.finish;
-		gui.startTime = Time.time;
 	}
 
 	// TODO: damage
