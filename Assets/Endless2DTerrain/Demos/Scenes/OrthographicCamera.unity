@@ -4,13 +4,12 @@
 SceneSettings:
   m_ObjectHideFlags: 0
   m_PVSData: 
-  m_QueryMode: 1
   m_PVSObjectsArray: []
   m_PVSPortalsArray: []
   m_OcclusionBakeSettings:
-    viewCellSize: 1
-    bakeMode: 2
-    memoryUsage: 10485760
+    smallestOccluder: 5
+    smallestHole: .25
+    backfaceThreshold: 100
 --- !u!104 &2
 RenderSettings:
   m_Fog: 0
@@ -23,6 +22,7 @@ RenderSettings:
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: .5
   m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 0}
   m_ObjectHideFlags: 0
@@ -91,8 +91,14 @@ Mesh:
     localAABB:
       m_Center: {x: 125, y: 9.97870064, z: 0}
       m_Extent: {x: 25, y: 12.2389545, z: 0}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -100,7 +106,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -241,6 +246,7 @@ Transform:
   m_LocalScale: {x: 15, y: 15, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 19
 --- !u!23 &27880862
 Renderer:
   m_ObjectHideFlags: 0
@@ -259,6 +265,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!64 &27880863
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -428,6 +436,7 @@ Transform:
   - {fileID: 540526168}
   - {fileID: 617300184}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!1 &80521193
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +467,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 3
 --- !u!114 &80521195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,6 +509,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &80521198
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -535,6 +547,7 @@ Transform:
   - {fileID: 987472927}
   - {fileID: 1744589926}
   m_Father: {fileID: 617300184}
+  m_RootOrder: 0
 --- !u!43 &268710986
 Mesh:
   m_ObjectHideFlags: 0
@@ -552,8 +565,14 @@ Mesh:
     localAABB:
       m_Center: {x: 75, y: 26.4105129, z: 5}
       m_Extent: {x: 25, y: 4.19285774, z: 5}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -561,7 +580,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 1
     m_VertexCount: 102
@@ -703,6 +721,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 10
 --- !u!114 &324691420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,6 +763,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &324691423
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -780,6 +801,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 168454693}
+  m_RootOrder: 0
 --- !u!64 &343832008
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -811,6 +833,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &343832010
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -835,8 +859,14 @@ Mesh:
     localAABB:
       m_Center: {x: -75, y: 5.79288292, z: 5}
       m_Extent: {x: 25, y: 5.79288292, z: 5}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -844,7 +874,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -985,6 +1014,7 @@ Transform:
   m_LocalScale: {x: 14.999999, y: 14.9999981, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 18
 --- !u!23 &366074002
 Renderer:
   m_ObjectHideFlags: 0
@@ -1003,6 +1033,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!64 &366074003
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1052,6 +1084,7 @@ Transform:
   m_LocalScale: {x: 15.000001, y: 15, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 22
 --- !u!23 &366910205
 Renderer:
   m_ObjectHideFlags: 0
@@ -1070,6 +1103,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!64 &366910206
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1118,6 +1153,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1930735641}
+  m_RootOrder: 2
 --- !u!64 &395655559
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1155,8 +1191,14 @@ Mesh:
     localAABB:
       m_Center: {x: 25, y: -30.8032455, z: 0}
       m_Extent: {x: 25, y: 61.4066162, z: 0}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -1164,7 +1206,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -1326,6 +1367,7 @@ Transform:
   - {fileID: 366910204}
   - {fileID: 612532494}
   m_Father: {fileID: 49930236}
+  m_RootOrder: 0
 --- !u!1 &547643260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,6 +1397,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1634786493}
+  m_RootOrder: 0
 --- !u!64 &547643262
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1386,6 +1429,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &547643264
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1422,6 +1467,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 764934162}
+  m_RootOrder: 0
 --- !u!64 &548485220
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1453,6 +1499,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &548485222
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1489,6 +1537,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1930735641}
+  m_RootOrder: 0
 --- !u!64 &601293259
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1520,6 +1569,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &601293261
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1556,6 +1607,7 @@ Transform:
   m_LocalScale: {x: 14.999999, y: 15, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 23
 --- !u!23 &612532495
 Renderer:
   m_ObjectHideFlags: 0
@@ -1574,6 +1626,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!64 &612532496
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1625,6 +1679,7 @@ Transform:
   - {fileID: 1187620135}
   - {fileID: 764934162}
   m_Father: {fileID: 49930236}
+  m_RootOrder: 1
 --- !u!1 &660194427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1655,6 +1710,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 2
 --- !u!114 &660194429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1696,6 +1752,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &660194432
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1733,6 +1791,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 13
 --- !u!114 &683654248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1774,6 +1833,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &683654251
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1798,8 +1859,14 @@ Mesh:
     localAABB:
       m_Center: {x: -75, y: -44.2071152, z: 0}
       m_Extent: {x: 25, y: 55.7928848, z: 0}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -1807,7 +1874,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -1949,6 +2015,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 9
 --- !u!114 &738304072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1990,6 +2057,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &738304075
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2026,6 +2095,7 @@ Transform:
   - {fileID: 1581022714}
   - {fileID: 1099630232}
   m_Father: {fileID: 617300184}
+  m_RootOrder: 4
 --- !u!1 &885951351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2056,6 +2126,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 11
 --- !u!114 &885951353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2097,6 +2168,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &885951356
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2134,6 +2207,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 17
 --- !u!114 &891795405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2175,6 +2249,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &891795408
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2212,6 +2288,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 16
 --- !u!114 &900277609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2253,6 +2330,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &900277612
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2288,6 +2367,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1634786493}
+  m_RootOrder: 2
 --- !u!64 &908706634
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2325,8 +2405,14 @@ Mesh:
     localAABB:
       m_Center: {x: -25, y: 9.68795395, z: 5}
       m_Extent: {x: 25, y: 1.89781189, z: 5}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -2334,7 +2420,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 1
     m_VertexCount: 102
@@ -2463,8 +2548,14 @@ Mesh:
     localAABB:
       m_Center: {x: -25, y: -40.3120499, z: 0}
       m_Extent: {x: 25, y: 51.8978119, z: 0}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -2472,7 +2563,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -2613,6 +2703,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 168454693}
+  m_RootOrder: 1
 --- !u!64 &987472928
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2644,6 +2735,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &987472930
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2718,7 +2811,11 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
   m_HDR: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: .0219999999
 --- !u!4 &989115567
 Transform:
   m_ObjectHideFlags: 0
@@ -2731,6 +2828,7 @@ Transform:
   m_Children:
   - {fileID: 1967355241}
   m_Father: {fileID: 0}
+  m_RootOrder: 2
 --- !u!1 &1099630231
 GameObject:
   m_ObjectHideFlags: 0
@@ -2759,6 +2857,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 764934162}
+  m_RootOrder: 2
 --- !u!64 &1099630233
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2809,6 +2908,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 8
 --- !u!114 &1135935520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2850,6 +2950,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1135935523
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2874,8 +2976,14 @@ Mesh:
     localAABB:
       m_Center: {x: 125, y: 10.9787006, z: 5}
       m_Extent: {x: 25, y: 11.2389545, z: 5}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -2883,7 +2991,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 1
     m_VertexCount: 102
@@ -3012,8 +3119,14 @@ Mesh:
     localAABB:
       m_Center: {x: 75, y: -23.5894852, z: 0}
       m_Extent: {x: 25, y: 54.1928558, z: 0}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -3021,7 +3134,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -3163,6 +3275,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 14
 --- !u!114 &1179889148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3204,6 +3317,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1179889151
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3240,6 +3355,7 @@ Transform:
   - {fileID: 2111528647}
   - {fileID: 1902928351}
   m_Father: {fileID: 617300184}
+  m_RootOrder: 3
 --- !u!1 &1362454052
 GameObject:
   m_ObjectHideFlags: 0
@@ -3269,6 +3385,7 @@ Transform:
   m_LocalScale: {x: 15.000001, y: 14.999999, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 20
 --- !u!23 &1362454054
 Renderer:
   m_ObjectHideFlags: 0
@@ -3287,6 +3404,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!64 &1362454055
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3337,6 +3456,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 15
 --- !u!114 &1363859177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3378,6 +3498,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1363859180
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3414,6 +3536,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1634786493}
+  m_RootOrder: 1
 --- !u!64 &1401934327
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3445,6 +3568,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1401934329
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3482,6 +3607,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 12
 --- !u!114 &1463948541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3523,6 +3649,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1463948544
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3559,6 +3687,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1187620135}
+  m_RootOrder: 0
 --- !u!64 &1520522281
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3590,6 +3719,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1520522283
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3626,6 +3757,7 @@ Transform:
   m_LocalScale: {x: 15.000001, y: 15.000001, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 21
 --- !u!23 &1574824843
 Renderer:
   m_ObjectHideFlags: 0
@@ -3644,6 +3776,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!64 &1574824844
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3693,6 +3827,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 764934162}
+  m_RootOrder: 1
 --- !u!64 &1581022715
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3724,6 +3859,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1581022717
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3748,8 +3885,14 @@ Mesh:
     localAABB:
       m_Center: {x: 25, y: 19.1967564, z: 5}
       m_Extent: {x: 25, y: 11.4066143, z: 5}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -3757,7 +3900,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -3899,6 +4041,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 6
 --- !u!114 &1601748047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3940,6 +4083,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1601748050
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3976,6 +4121,7 @@ Transform:
   - {fileID: 1401934326}
   - {fileID: 908706633}
   m_Father: {fileID: 617300184}
+  m_RootOrder: 1
 --- !u!43 &1639770542
 Mesh:
   m_ObjectHideFlags: 0
@@ -3993,8 +4139,14 @@ Mesh:
     localAABB:
       m_Center: {x: -25, y: 8.68795395, z: 0}
       m_Extent: {x: 25, y: 2.89781189, z: 0}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -4002,7 +4154,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -4144,6 +4295,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 7
 --- !u!114 &1710839189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4185,6 +4337,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1710839192
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4220,6 +4374,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 168454693}
+  m_RootOrder: 2
 --- !u!64 &1744589927
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4270,6 +4425,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 1
 --- !u!114 &1772099388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4311,6 +4467,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1772099391
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4335,8 +4493,14 @@ Mesh:
     localAABB:
       m_Center: {x: 25, y: 19.1967564, z: 5}
       m_Extent: {x: 25, y: 11.4066143, z: 5}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -4344,7 +4508,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 1
     m_VertexCount: 102
@@ -4486,6 +4649,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 4
 --- !u!114 &1811806927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4527,6 +4691,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1811806930
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4564,6 +4730,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 5
 --- !u!114 &1821850694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4605,6 +4772,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1821850697
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4629,8 +4798,14 @@ Mesh:
     localAABB:
       m_Center: {x: 75, y: 25.4105129, z: 0}
       m_Extent: {x: 25, y: 5.19285774, z: 0}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -4638,7 +4813,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -4767,8 +4941,14 @@ Mesh:
     localAABB:
       m_Center: {x: -25, y: 9.68795395, z: 5}
       m_Extent: {x: 25, y: 1.89781189, z: 5}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -4776,7 +4956,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -4916,6 +5095,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1187620135}
+  m_RootOrder: 2
 --- !u!64 &1902928352
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4965,6 +5145,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1930735641}
+  m_RootOrder: 1
 --- !u!64 &1925303216
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4996,6 +5177,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1925303218
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5032,6 +5215,7 @@ Transform:
   - {fileID: 1925303215}
   - {fileID: 395655558}
   m_Father: {fileID: 617300184}
+  m_RootOrder: 2
 --- !u!43 &1966702587
 Mesh:
   m_ObjectHideFlags: 0
@@ -5049,8 +5233,14 @@ Mesh:
     localAABB:
       m_Center: {x: -75, y: 5.79288292, z: 5}
       m_Extent: {x: 25, y: 5.79288292, z: 5}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -5058,7 +5248,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 1
     m_VertexCount: 102
@@ -5205,6 +5394,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &1967355240
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5223,6 +5414,7 @@ Transform:
   m_LocalScale: {x: 160, y: 110, z: 1}
   m_Children: []
   m_Father: {fileID: 989115567}
+  m_RootOrder: 0
 --- !u!1 &1976255289
 GameObject:
   m_ObjectHideFlags: 0
@@ -5261,6 +5453,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!143 &1976255291
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5295,6 +5489,7 @@ Transform:
   m_LocalScale: {x: 4, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 1
 --- !u!114 &1976255294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5328,8 +5523,14 @@ Mesh:
     localAABB:
       m_Center: {x: 25, y: 18.1967564, z: 0}
       m_Extent: {x: 25, y: 12.4066143, z: 0}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -5337,7 +5538,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -5466,8 +5666,14 @@ Mesh:
     localAABB:
       m_Center: {x: 125, y: -39.0213013, z: 0}
       m_Extent: {x: 25, y: 61.2389526, z: 0}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -5475,7 +5681,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -5604,8 +5809,14 @@ Mesh:
     localAABB:
       m_Center: {x: 75, y: 26.4105129, z: 5}
       m_Extent: {x: 25, y: 4.19285774, z: 5}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -5613,7 +5824,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -5742,8 +5952,14 @@ Mesh:
     localAABB:
       m_Center: {x: 125, y: 10.9787006, z: 5}
       m_Extent: {x: 25, y: 11.2389545, z: 5}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -5751,7 +5967,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -5880,8 +6095,14 @@ Mesh:
     localAABB:
       m_Center: {x: -75, y: 4.79288292, z: 0}
       m_Extent: {x: 25, y: 6.79288292, z: 0}
-  m_Shapes: []
-  m_ShapeVertices: []
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
   m_MeshCompression: 0
   m_StreamCompression: 0
   m_IsReadable: 1
@@ -5889,7 +6110,6 @@ Mesh:
   m_KeepIndices: 1
   m_IndexBuffer: 000001000300030002000000020003000500050004000200040005000700070006000400060007000900090008000600080009000b000b000a0008000a000b000d000d000c000a000c000d000f000f000e000c000e000f001100110010000e00100011001300130012001000120013001500150014001200140015001700170016001400160017001900190018001600180019001b001b001a0018001a001b001d001d001c001a001c001d001f001f001e001c001e001f002100210020001e00200021002300230022002000220023002500250024002200240025002700270026002400260027002900290028002600280029002b002b002a0028002a002b002d002d002c002a002c002d002f002f002e002c002e002f003100310030002e00300031003300330032003000320033003500350034003200340035003700370036003400360037003900390038003600380039003b003b003a0038003a003b003d003d003c003a003c003d003f003f003e003c003e003f004100410040003e00400041004300430042004000420043004500450044004200440045004700470046004400460047004900490048004600480049004b004b004a0048004a004b004d004d004c004a004c004d004f004f004e004c004e004f005100510050004e00500051005300530052005000520053005500550054005200540055005700570056005400560057005900590058005600580059005b005b005a0058005a005b005d005d005c005a005c005d005f005f005e005c005e005f006100610060005e00600061006300630062006000620063006500650064006200
   m_Skin: []
-  m_BindPose: []
   m_VertexData:
     m_CurrentChannels: 11
     m_VertexCount: 102
@@ -6031,6 +6251,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 540526168}
+  m_RootOrder: 0
 --- !u!114 &2101953826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6072,6 +6293,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &2101953829
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6108,6 +6331,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1187620135}
+  m_RootOrder: 1
 --- !u!64 &2111528648
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6139,6 +6363,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &2111528650
 MeshFilter:
   m_ObjectHideFlags: 0
