@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: e293036c6749c0b44b27af15ce9254e0
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - speedMeterPointer: {fileID: 2800000, guid: 191b57906d05fc54fae01f3540583b31, type: 3}
+  - speedMeterBackground: {fileID: 2800000, guid: 9c161b7193ba9434ea6bb657a7af2544,
+      type: 3}
+  - gasRemainingPointer: {instanceID: 0}
+  - gasRemainingBackground: {instanceID: 0}
+  - scoreIcon: {instanceID: 0}
+  - menuButton: {instanceID: 0}
+  - skin: {instanceID: 0}
+  - logo: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
