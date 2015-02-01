@@ -17,6 +17,8 @@ public class gui : MonoBehaviour {
 	static public float speedMeterValue;
 	static public float gasRemainingValue;
 	static public double score;
+	public float shiftX = 1;
+	public float shiftY = 1;
 
 	// globalne premenne pre aktualnu scenu
 	static public float startTime;
@@ -102,7 +104,7 @@ public class gui : MonoBehaviour {
 		if (GUILayout.Button("Restart"))
 			Application.LoadLevel(this.level);
 		
-		else if (GUILayout.Button("Quit"))
+		else if (GUILayout.Button("Quit")) 
 			Application.LoadLevel("menu");
 
 		GUILayout.EndVertical();
@@ -148,7 +150,7 @@ public class gui : MonoBehaviour {
 		
 		GUI.Label(new Rect(positionCentreX - rectangleSize/2, positionCentreY - rectangleSize/2, rectangleSize, rectangleSize), speedMeterBackground);
 		float rotationAngle = speedMeterValue * arrowRange - arrowRange / 2;
-		GUIUtility.RotateAroundPivot(rotationAngle, new Vector2(positionCentreX, positionCentreY));
+		GUIUtility.RotateAroundPivot(rotationAngle, new Vector2(positionCentreX - 3, positionCentreY));
 		GUI.Label(new Rect(positionCentreX - arrowSize/2, positionCentreY - arrowSize/2, arrowSize, arrowSize), speedMeterPointer);
 		GUI.matrix = Matrix4x4.identity;
 	}
@@ -166,7 +168,7 @@ public class gui : MonoBehaviour {
 		
 		GUI.Label(new Rect(positionCentreX - rectangleSize/2, positionCentreY - rectangleSize/2, rectangleSize, rectangleSize), gasRemainingBackground);
 		float rotationAngle = gasRemainingValue * arrowRange - arrowRange / 2;
-		GUIUtility.RotateAroundPivot(rotationAngle, new Vector2(positionCentreX, positionCentreY));
+		GUIUtility.RotateAroundPivot(rotationAngle, new Vector2(positionCentreX - 3, positionCentreY));
 		GUI.Label(new Rect(positionCentreX - arrowSize/2, positionCentreY - arrowSize/2, arrowSize, arrowSize), gasRemainingPointer);
 		GUI.matrix = Matrix4x4.identity;
 	}
