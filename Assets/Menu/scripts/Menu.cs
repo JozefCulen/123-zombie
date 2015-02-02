@@ -55,15 +55,21 @@ public class Menu : MonoBehaviour {
 		GUILayout.BeginArea(r);
 			GUILayout.BeginVertical("box");   
 		
-			if (GUILayout.Button("Play"))
-				Application.LoadLevel(this.level);   
+			if (GUILayout.Button("Play")) {
+				GameControl.Save ();
+				Application.LoadLevel(this.level);  
+			}
 		
-			if (GUILayout.Button("Options"))
-				this.showOptions = true;   
+			if (GUILayout.Button("Options")) {
+				//GameControl.save.settings = "Mercy";
+				this.showOptions = true;
+			}
 		
-			if (GUILayout.Button("Quit"))
+			if (GUILayout.Button("Quit")) {
+				GameControl.Save ();
 				Application.Quit();
-		
+			}
+			
 			GUILayout.EndVertical();        
 		GUILayout.EndArea();   
 	}
@@ -91,11 +97,14 @@ public class Menu : MonoBehaviour {
 		else {
 			drawMain (r);
 		}
-		GUI.Label(new Rect(300, 10, 1000, 200), GameControl.save.users[0].username);
+		GUI.Label(new Rect(300, 10, 1000, 200), GameControl.save.users[0].username + " | " + GameControl.save.settings);
 	}
 
 	void Start () {
-		GameControl.Load ();
-		//GameControl.Destroy ();
+		if (GameControl.ValidSaveFile ()) {
+			GameControl.Load ();
+		} else {
+			GameControl.Init ();
+		}
 	}
 }
