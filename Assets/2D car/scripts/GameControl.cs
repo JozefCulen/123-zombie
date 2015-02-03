@@ -31,7 +31,7 @@ public static class GameControl {
 		test.score = 123;
 		test.username = "Queen Elsa 2";
 		save.users.Add(test);
-		save.settings = "Test";
+		save.score = 0;
 		return save;
 	}
 	
@@ -187,5 +187,5 @@ public class SaveFile2
 {
 	public string path;
 	public List<SaveUser1> users  = new List<SaveUser1>();
-	public string settings;
+	public double score;
 }

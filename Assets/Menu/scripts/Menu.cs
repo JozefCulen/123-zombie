@@ -97,7 +97,7 @@ public class Menu : MonoBehaviour {
 		else {
 			drawMain (r);
 		}
-		GUI.Label(new Rect(300, 10, 1000, 200), GameControl.save.users[0].username + " | " + GameControl.save.settings);
+		GUI.Label(new Rect(300, 10, 1000, 200), GameControl.save.users[0].username + " | " + GameControl.save.score.ToString());
 	}
 
 	void Start () {

@@ -94,19 +94,23 @@ public class gui : MonoBehaviour {
 	}
 	
 	void drawFinish(Rect r)	{
+		double elapsedTime = ( (int) ((gui.finishTime - gui.startTime) * 100) / 100.0 );
+
 		GUILayout.BeginArea(r);
 		GUILayout.BeginVertical("box");
 
-		GUILayout.Label( "Elapsed time: "+ (gui.finishTime - gui.startTime).ToString() +"s" , scoreStyle);
+		GUILayout.Label( "Elapsed time: "+ elapsedTime.ToString() +"s" , scoreStyle);
 		GUILayout.Label( "Earned score: " + score.ToString() , scoreStyle);
 		GUILayout.Label( "Best score: 0", scoreStyle);
 
 		if (GUILayout.Button("Restart"))
 			Application.LoadLevel(this.level);
 		
-		else if (GUILayout.Button("Quit")) 
+		else if (GUILayout.Button("Quit")) {
+			GameControl.save.score += score;
+			GameControl.Save();
 			Application.LoadLevel("menu");
-
+		}
 		GUILayout.EndVertical();
 		GUILayout.EndArea();
 	}
