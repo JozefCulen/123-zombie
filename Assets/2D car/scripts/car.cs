@@ -152,7 +152,7 @@ public class car : MonoBehaviour {
 			wheelPrefab.transform.position = new Vector3(wheelsAnchor[i].transform.position.x, wheelsAnchor[i].transform.position.y, -0.1f);
 
 			// pripojeni kolesa k bodu pripoju na aute
-			wheelJoint.connectedBody = wheelPrefab.rigidbody2D;
+			wheelJoint.connectedBody = wheelPrefab.GetComponent<Rigidbody2D>();
 
 			// nastaveni pozicie bodu pripoju
 			wheelJoint.anchor = new Vector2(wheelsAnchor[i].transform.localPosition.x, wheelsAnchor[i].transform.localPosition.y);
@@ -197,7 +197,7 @@ public class car : MonoBehaviour {
 	
 	private void breakingDetection() {
 		// uzivatel stlaca plyn a auto ide do opacneho smeru
-		if (direction * this.rigidbody2D.velocity.x > 0 || this.finish) {
+		if (direction * this.GetComponent<Rigidbody2D>().velocity.x > 0 || this.finish) {
 			this.breaking = true;
 		}
 		else {
@@ -291,7 +291,7 @@ public class car : MonoBehaviour {
 					leaningValue = Time.deltaTime * (jakRychloZrychluje / jakDlhoZrychluje);
 
 					// zablokujem otacanie fyzickalnym enginom
-					this.gameObject.rigidbody2D.fixedAngle = true;
+					this.gameObject.GetComponent<Rigidbody2D>().fixedAngle = true;
 				}
 			}
 			this.transform.Rotate( new Vector3(0, 0, 50 * leaningDirection) , 1f);
@@ -302,7 +302,7 @@ public class car : MonoBehaviour {
 			leaningValue = 0;
 
 			// povolim otacanie fyzickalnym enginom
-			this.gameObject.rigidbody2D.fixedAngle = false;
+			this.gameObject.GetComponent<Rigidbody2D>().fixedAngle = false;
 		}
 	}
 

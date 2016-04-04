@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class CustomInput : MonoBehaviour{
@@ -84,7 +85,7 @@ public class CustomInput : MonoBehaviour{
 	void Update(){
 		if (gui.paused) return;
 		if (Input.touchCount > 3) {
-			Application.LoadLevel ("APC-test"); 
+			SceneManager.LoadScene ("APC-test"); 
 			// Input.touchCount = 1 alebo 2
 		}
 	}

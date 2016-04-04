@@ -57,7 +57,7 @@ public class Wheel : MonoBehaviour {
 		wheelSprite = jointObject.connectedBody; 
 		
 		// priradim skript na detekciu kolizie
-		WheelCollision collisionScript = wheelSprite.gameObject.AddComponent("WheelCollision") as WheelCollision;
+		WheelCollision collisionScript = wheelSprite.gameObject.AddComponent<WheelCollision>();
 		
 		// do skriptu si zapisem ID kolesa ke keremu patri
 		collisionScript.wheelId = input_index;
@@ -78,9 +78,9 @@ public class Wheel : MonoBehaviour {
 		float skidValue; // absolutna hodnota smyku
 
 		// pomer rychlosti otacania kolesa a rychlosti kolesa (t.j. aku vzdialenost preslo)
-		skidValue = Mathf.Abs(joint.jointSpeed / joint.rigidbody2D.velocity.magnitude );
+		skidValue = Mathf.Abs(joint.jointSpeed / joint.GetComponent<Rigidbody2D>().velocity.magnitude );
 
-		if ( (skidValue / skidConstant > 1.03 || skidValue / skidConstant < 0.95) && this.groundContact && joint.rigidbody2D.velocity.x > 0.1f) {
+		if ( (skidValue / skidConstant > 1.03 || skidValue / skidConstant < 0.95) && this.groundContact && joint.GetComponent<Rigidbody2D>().velocity.x > 0.1f) {
 			this.sliding = true;
 		}
 		else{
@@ -97,7 +97,7 @@ public class Wheel : MonoBehaviour {
 		}
 		
 		// velka rychlost kolesa
-		if ( Mathf.Abs(this.joint.rigidbody2D.velocity.magnitude) > carInstance.smokingLargeSpeed && groundContact ) {
+		if ( Mathf.Abs(this.joint.GetComponent<Rigidbody2D>().velocity.magnitude) > carInstance.smokingLargeSpeed && groundContact ) {
 			this.smoking = true;
 		}
 
@@ -118,7 +118,7 @@ public class Wheel : MonoBehaviour {
 
 		// nie je stlacene ziadne tlacitko
 		if (!this.carInstance.GetFinish() && this.carInstance.GetDirection() == 0) {
-			if( this.joint.motor.motorSpeed * this.joint.rigidbody2D.velocity.x > 0 ) {
+			if( this.joint.motor.motorSpeed * this.joint.GetComponent<Rigidbody2D>().velocity.x > 0 ) {
 				newMotor.motorSpeed = newMotor.motorSpeed * -1;
 			}
 
@@ -129,7 +129,7 @@ public class Wheel : MonoBehaviour {
 			this.joint.useMotor = false;
 		}
 		// uzivatel stlaca plyn a auto ide do opacneho smeru
-		else if(this.carInstance.GetFinish() || this.carInstance.GetDirection() * this.joint.rigidbody2D.velocity.x > 0 ) {
+		else if(this.carInstance.GetFinish() || this.carInstance.GetDirection() * this.joint.GetComponent<Rigidbody2D>().velocity.x > 0 ) {
 			// zapnem tah motora
 			newMotor.maxMotorTorque = carInstance.maxTorgueBreak;
 			
@@ -187,7 +187,7 @@ public class Wheel : MonoBehaviour {
 	}
 
 	public float GetVelocityMagnitude() {
-		return this.joint.rigidbody2D.velocity.magnitude;
+		return this.joint.GetComponent<Rigidbody2D>().velocity.magnitude;
 	}
 
 	public void UpdateGroundContact( bool input_value) {

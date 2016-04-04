@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -51,9 +52,9 @@ public static class GameControl {
 			
 			// zatvorenie pomocneho suboru
 			file.Close ();
-			
-			// premenujem pomocny subor na iny nazov aby som vedel, ze subor je validny
-			File.Move (Application.persistentDataPath + "/save" + version + "-phase1.dat", Application.persistentDataPath + "/save" + version + "-phase2.dat");
+
+            // premenujem pomocny subor na iny nazov aby som vedel, ze subor je validny
+            FileUtil.MoveFileOrDirectory(Application.persistentDataPath + "/save" + version + "-phase1.dat", Application.persistentDataPath + "/save" + version + "-phase2.dat");
 			
 			// odstrananie hlavneho suboru
 			if( File.Exists (Application.persistentDataPath + "/save" + version + ".dat") ) {
@@ -79,9 +80,9 @@ public static class GameControl {
 			if( File.Exists (Application.persistentDataPath + "/save" + version + "-phase1.dat") ) {
 				// odstranenie pomocneho suboru
 				File.Delete(Application.persistentDataPath + "/save" + version + "-phase2.dat");
-				
-				// premenujem pomocny subor na iny nazov aby som vedel, ze subor je validny
-				File.Move (Application.persistentDataPath + "/save" + version + "-phase1.dat", Application.persistentDataPath + "/save" + version + "-phase2.dat");
+
+                // premenujem pomocny subor na iny nazov aby som vedel, ze subor je validny
+                FileUtil.MoveFileOrDirectory (Application.persistentDataPath + "/save" + version + "-phase1.dat", Application.persistentDataPath + "/save" + version + "-phase2.dat");
 			}
 			
 			// odstrananie hlavneho suboru
